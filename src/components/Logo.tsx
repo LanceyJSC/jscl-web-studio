@@ -25,30 +25,22 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   const rotateY = useTransform(springX, [0, 1], [-25, 25]); 
   const skewX = useTransform(springX, [0, 1], [-2, 2]);
 
-  const updatePosition = (clientX: number, clientY: number) => {
-    if (!animated || !containerRef.current) return;
+  const handleMouseMove = (e: React.MouseEvent) => {
+    // Disable interaction if animated is false
+    if (!animated) return;
+
+    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     
     // Calculate normalized position (0 to 1)
-    const newX = (clientX - rect.left) / rect.width;
-    const newY = (clientY - rect.top) / rect.height;
+    const newX = (e.clientX - rect.left) / rect.width;
+    const newY = (e.clientY - rect.top) / rect.height;
     
     x.set(newX);
     y.set(newY);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    updatePosition(e.clientX, e.clientY);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      const touch = e.touches[0];
-      updatePosition(touch.clientX, touch.clientY);
-    }
-  };
-
-  const handleInteractionEnd = () => {
+  const handleMouseLeave = () => {
     if (!animated) return;
     x.set(0.5);
     y.set(0.5);
@@ -97,9 +89,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
       className={`flex flex-col items-center relative ${className}`} 
       style={{ perspective: 800 }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleInteractionEnd}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleInteractionEnd}
+      onMouseLeave={handleMouseLeave}
     >
       {/* 3D Container */}
       <motion.div 
