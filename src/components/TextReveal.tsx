@@ -11,58 +11,57 @@ const chars = "!@#$%^&*()_+-=[]{}|;:,.<>/?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const TextReveal: React.FC<TextRevealProps> = ({ children, className = "", delay = 0 }) => {
   const [displayText, setDisplayText] = useState(children);
-  const [isRevealed, setIsRevealed] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
   
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-20%" });
-
-  // Wait for mount to avoid triggering on initial page load
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setHasMounted(true);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
+  // once: false allows re-triggering on every scroll into view
+  const isInView = useInView(ref, { once: false, margin: "-10%" });
 
   useEffect(() => {
-    // If we've already revealed it, stop.
-    if (isRevealed) return;
-
-    // Only trigger if mounted and in view
-    if (hasMounted && isInView) {
-      setHasStarted(true);
-      const startTimeout = setTimeout(() => {
-        let iteration = 0;
-        const interval = setInterval(() => {
-          setDisplayText(
-            children
-              .split("")
-              .map((letter, index) => {
-                if (index < iteration) {
-                  return children[index];
-                }
-                return chars[Math.floor(Math.random() * chars.length)];
-              })
-              .join("")
-          );
-
-          if (iteration >= children.length) {
-            clearInterval(interval);
-            setIsRevealed(true);
-            setDisplayText(children);
-          }
-
-          iteration += 1 / 3; 
-        }, 30);
-
-        return () => clearInterval(interval);
-      }, delay * 1000);
-
-      return () => clearTimeout(startTimeout);
+    // When element leaves viewport, reset state for next animation
+    if (!isInView) {
+      setIsAnimating(false);
+      setHasStarted(false);
+      setDisplayText(children);
+      return;
     }
-  }, [isInView, children, delay, isRevealed, hasMounted]);
+
+    // If already animating, don't restart
+    if (isAnimating) return;
+
+    // Start animation when in view
+    setHasStarted(true);
+    setIsAnimating(true);
+    
+    const startTimeout = setTimeout(() => {
+      let iteration = 0;
+      const interval = setInterval(() => {
+        setDisplayText(
+          children
+            .split("")
+            .map((letter, index) => {
+              if (index < iteration) {
+                return children[index];
+              }
+              return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join("")
+        );
+
+        if (iteration >= children.length) {
+          clearInterval(interval);
+          setDisplayText(children);
+        }
+
+        iteration += 1 / 3; 
+      }, 30);
+
+      return () => clearInterval(interval);
+    }, delay * 1000);
+
+    return () => clearTimeout(startTimeout);
+  }, [isInView, children, delay, isAnimating]);
 
   return (
     <span 
