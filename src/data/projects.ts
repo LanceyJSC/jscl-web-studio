@@ -1,4 +1,5 @@
 import sceneburnPreview from '@/assets/projects/sceneburn-preview.png';
+import noteflowPreview from '@/assets/projects/noteflow-preview.png';
 
 export interface Project {
   id: number;
@@ -39,20 +40,20 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    slug: 'apex-finance',
-    title: 'Apex Finance',
-    category: 'Trading Interface',
-    year: '2023',
-    image: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=2670&auto=format&fit=crop',
-    externalLink: '#',
-    headline: 'Professional-grade trading for everyone',
-    description: 'Apex Finance is a sophisticated trading platform designed to bring institutional-level tools to retail investors. The interface balances complexity with usability, providing real-time data and advanced charting capabilities.',
-    challenge: 'Retail traders often struggle with overly complex platforms or lack access to professional tools. We needed to bridge this gap by creating an interface that could handle advanced functionality while remaining approachable.',
-    solution: 'We developed a modular dashboard that adapts to user expertise levels. Beginners see simplified views, while power users can unlock advanced features. Real-time data streaming and customizable workspaces allow traders to optimize their workflow.',
-    technologies: ['React', 'TypeScript', 'WebSocket', 'D3.js', 'Node.js', 'Redis'],
-    role: 'UI/UX Designer',
-    duration: '8 months',
-    screenshots: ['https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=2670&auto=format&fit=crop'],
+    slug: 'noteflow',
+    title: 'NoteFlow',
+    category: 'Productivity App',
+    year: '2024',
+    image: noteflowPreview,
+    externalLink: 'https://jscl.lovable.app',
+    headline: 'Streamlined task and note management',
+    description: 'NoteFlow is a modern productivity application that combines task management, note-taking, and project organization into one seamless experience. The dark-themed interface prioritizes focus and reduces eye strain during long work sessions.',
+    challenge: 'Users often juggle multiple productivity tools, leading to fragmented workflows and lost information. The goal was to create a unified workspace that handles tasks, notes, and projects without overwhelming users.',
+    solution: 'We designed an intuitive dashboard that surfaces the most important information first. The sidebar navigation provides quick access to all features, while the statistics overview helps users stay on track with their goals. Smart categorization and a clean visual hierarchy ensure nothing falls through the cracks.',
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Framer Motion'],
+    role: 'Full Stack Developer & Designer',
+    duration: '4 months',
+    screenshots: [noteflowPreview],
   },
   {
     id: 3,
