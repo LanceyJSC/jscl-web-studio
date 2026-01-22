@@ -13,15 +13,25 @@ const TextReveal: React.FC<TextRevealProps> = ({ children, className = "", delay
   const [displayText, setDisplayText] = useState(children);
   const [isRevealed, setIsRevealed] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
+  const isInView = useInView(ref, { once: true, margin: "-20%" });
+
+  // Wait for mount to avoid triggering on initial page load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHasMounted(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     // If we've already revealed it, stop.
     if (isRevealed) return;
 
-    if (isInView) {
+    // Only trigger if mounted and in view
+    if (hasMounted && isInView) {
       setHasStarted(true);
       const startTimeout = setTimeout(() => {
         let iteration = 0;
@@ -52,7 +62,7 @@ const TextReveal: React.FC<TextRevealProps> = ({ children, className = "", delay
 
       return () => clearTimeout(startTimeout);
     }
-  }, [isInView, children, delay, isRevealed]);
+  }, [isInView, children, delay, isRevealed, hasMounted]);
 
   return (
     <span 
