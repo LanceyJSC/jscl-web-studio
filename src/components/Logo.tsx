@@ -1,0 +1,221 @@
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+
+interface LogoProps {
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  className?: string;
+  withSubtitle?: boolean;
+  animated?: boolean;
+}
+
+const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, animated = true }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // 1. Mouse Tracking (0 to 1)
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+
+  // 2. Physics Configuration
+  const springConfig = { damping: 30, stiffness: 400, mass: 0.5 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+
+  // 3. Transforms
+  const rotateX = useTransform(springY, [0, 1], [25, -25]); 
+  const rotateY = useTransform(springX, [0, 1], [-25, 25]); 
+  const skewX = useTransform(springX, [0, 1], [-2, 2]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    // Disable interaction if animated is false
+    if (!animated) return;
+
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    
+    // Calculate normalized position (0 to 1)
+    const newX = (e.clientX - rect.left) / rect.width;
+    const newY = (e.clientY - rect.top) / rect.height;
+    
+    x.set(newX);
+    y.set(newY);
+  };
+
+  const handleMouseLeave = () => {
+    if (!animated) return;
+    x.set(0.5);
+    y.set(0.5);
+  };
+
+  // Dimensions & Styles
+  const sizeClasses = {
+    sm: 'w-10 h-10',
+    md: 'w-24 h-24',
+    lg: 'w-48 h-48',
+    xl: 'w-64 h-64',
+    '2xl': 'w-80 h-80',
+  };
+
+  const textClasses = {
+    sm: 'text-[12px]',
+    md: 'text-3xl',
+    lg: 'text-6xl',
+    xl: 'text-8xl',
+    '2xl': 'text-9xl',
+  };
+
+  const subtitleClasses = {
+    sm: 'text-[6px] mt-1',
+    md: 'text-[10px] mt-2',
+    lg: 'text-sm mt-4',
+    xl: 'text-lg mt-6',
+    '2xl': 'text-xl mt-8',
+  };
+
+  const showSubtitle = withSubtitle !== undefined 
+    ? withSubtitle 
+    : (size === 'lg' || size === 'xl' || size === '2xl');
+
+  const letters = ['J', 'S', 'C', 'L'];
+
+  // Animation Timings (Faster for small logos)
+  const isSmall = size === 'sm';
+  const duration = isSmall ? 0.2 : 0.3;
+  const stagger = isSmall ? 0.05 : 0.1;
+  const letterDuration = isSmall ? 0.3 : 0.5;
+
+  return (
+    <div 
+      ref={containerRef}
+      className={`flex flex-col items-center relative ${className}`} 
+      style={{ perspective: 800 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* 3D Container */}
+      <motion.div 
+        className={`relative grid grid-cols-2 grid-rows-2 ${sizeClasses[size]} bg-transparent`}
+        style={{
+          rotateX,
+          rotateY,
+          skewX,
+          transformStyle: "preserve-3d", 
+        }}
+      >
+        {/* --- Outer Frame Construction (Clockwise Drawing) --- */}
+        
+        {/* Top Line: Left to Right */}
+        <motion.div 
+            className="absolute top-0 left-0 right-0 h-px bg-foreground origin-left"
+            initial={{ scaleX: animated ? 0 : 1 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: 0 }}
+        />
+        
+        {/* Right Line: Top to Bottom */}
+        <motion.div 
+            className="absolute top-0 right-0 bottom-0 w-px bg-foreground origin-top"
+            initial={{ scaleY: animated ? 0 : 1 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration : 0 }}
+        />
+
+        {/* Bottom Line: Right to Left */}
+        <motion.div 
+            className="absolute bottom-0 right-0 left-0 h-px bg-foreground origin-right"
+            initial={{ scaleX: animated ? 0 : 1 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration * 2 : 0 }}
+        />
+
+        {/* Left Line: Bottom to Top */}
+        <motion.div 
+            className="absolute bottom-0 left-0 top-0 w-px bg-foreground origin-bottom"
+            initial={{ scaleY: animated ? 0 : 1 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration * 3 : 0 }}
+        />
+
+        {/* --- Internal Crosshairs --- */}
+        <motion.div 
+          className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-foreground pointer-events-none" 
+          style={{ translateZ: 10 }} 
+          initial={{ scaleY: animated ? 0 : 1 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: "circOut", delay: animated ? duration * 4 : 0 }}
+        />
+        <motion.div 
+          className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-foreground pointer-events-none" 
+          style={{ translateZ: 10 }} 
+          initial={{ scaleX: animated ? 0 : 1 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: "circOut", delay: animated ? duration * 4 : 0 }}
+        />
+
+        {/* --- Letters (Scanner Build Effect) --- */}
+        {letters.map((letter, i) => (
+          <div 
+            key={i} 
+            className="flex items-center justify-center w-full h-full relative pointer-events-none"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {/* Wrapper for letter to constrain scanner width */}
+            <div className="relative" style={{ transform: "translateZ(40px)" }}>
+                {/* Masked Letter - Reveals Bottom-Up */}
+                <motion.span 
+                    className={`${textClasses[size]} font-sans font-medium text-foreground leading-none select-none block`}
+                    initial={{ clipPath: animated ? "inset(100% 0 0 0)" : "inset(0% 0 0 0)" }}
+                    whileInView={{ clipPath: "inset(0% 0 0 0)" }}
+                    viewport={{ once: true }}
+                    transition={{ 
+                        duration: animated ? letterDuration : 0, 
+                        delay: animated ? (duration * 4.5) + (i * stagger) : 0, 
+                        ease: "linear"
+                    }}
+                >
+                    {letter}
+                </motion.span>
+                
+                {/* Scanner Line - Moves Bottom-Up along with the reveal */}
+                {animated && (
+                  <motion.div
+                      className="absolute left-0 right-0 h-[2px] bg-foreground"
+                      initial={{ bottom: "0%", opacity: 0 }}
+                      whileInView={{ bottom: "100%", opacity: [0, 1, 1, 0] }}
+                      viewport={{ once: true }}
+                      transition={{ 
+                          duration: letterDuration, 
+                          delay: (duration * 4.5) + (i * stagger), 
+                          ease: "linear",
+                          times: [0, 0.1, 0.9, 1] 
+                      }}
+                  />
+                )}
+            </div>
+          </div>
+        ))}
+      </motion.div>
+      
+      {/* Subtitle */}
+      {showSubtitle && (
+        <motion.div 
+          initial={{ opacity: animated ? 0 : 1, clipPath: animated ? "inset(0 100% 0 0)" : "inset(0 0 0 0)" }}
+          whileInView={{ opacity: 1, clipPath: "inset(0 0 0 0)" }}
+          viewport={{ once: true }}
+          transition={{ delay: animated ? duration * 6 : 0, duration: 0.8, ease: "circOut" }}
+        >
+          <span className={`block font-sans tracking-[0.4em] text-foreground font-medium uppercase ${subtitleClasses[size]}`}>
+            Web Designer
+          </span>
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+export default Logo;

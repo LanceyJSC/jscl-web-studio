@@ -2,78 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/* JSCL Web Designer - Blueprint Grid Aesthetic */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* JSCL Web Designer - Clean Minimal Design */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 @layer base {
   :root {
-    --background: 45 20% 97%;
-    --foreground: 220 20% 10%;
+    --background: 0 0% 98%;
+    --foreground: 0 0% 7%;
 
-    --card: 45 15% 95%;
-    --card-foreground: 220 20% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
 
-    --popover: 45 20% 97%;
-    --popover-foreground: 220 20% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
 
-    --primary: 220 20% 10%;
-    --primary-foreground: 45 20% 97%;
+    --primary: 0 0% 7%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 45 10% 90%;
-    --secondary-foreground: 220 20% 10%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 7%;
 
-    --muted: 45 10% 85%;
-    --muted-foreground: 220 10% 40%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 40%;
 
-    --accent: 160 60% 45%;
-    --accent-foreground: 45 20% 97%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 7%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 220 15% 85%;
-    --input: 220 15% 85%;
-    --ring: 220 20% 10%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 7%;
 
-    --radius: 0.25rem;
+    --radius: 0rem;
 
-    /* Custom JSCL tokens */
-    --grid-color: 220 15% 85%;
-    --grid-opacity: 0.4;
-    --accent-green: 160 60% 45%;
-    --accent-blue: 210 80% 55%;
+    /* Custom tokens */
+    --grid-color: 0 0% 0%;
+    --grid-opacity: 0.03;
   }
 
   .dark {
-    --background: 220 20% 8%;
-    --foreground: 45 20% 95%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
 
-    --card: 220 20% 12%;
-    --card-foreground: 45 20% 95%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 220 20% 8%;
-    --popover-foreground: 45 20% 95%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 45 20% 95%;
-    --primary-foreground: 220 20% 8%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 5%;
 
-    --secondary: 220 15% 18%;
-    --secondary-foreground: 45 20% 95%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 15% 25%;
-    --muted-foreground: 45 10% 60%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 160 60% 45%;
-    --accent-foreground: 220 20% 8%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 45 20% 95%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 98%;
 
-    --grid-color: 220 15% 25%;
+    --grid-color: 0 0% 100%;
   }
 }
 
@@ -87,71 +85,56 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Space Grotesk', sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Manrope', sans-serif;
   }
 
-  /* Blueprint Grid Background */
-  .blueprint-grid {
-    background-image: 
-      linear-gradient(hsl(var(--grid-color) / var(--grid-opacity)) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--grid-color) / var(--grid-opacity)) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  .blueprint-grid-fine {
-    background-image: 
-      linear-gradient(hsl(var(--grid-color) / 0.2) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--grid-color) / 0.2) 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-
-  /* Monospace styling */
-  .mono {
-    font-family: 'JetBrains Mono', monospace;
+  /* Hide default cursor on desktop */
+  @media (pointer: fine) {
+    * {
+      cursor: none !important;
+    }
   }
 
   /* Selection styling */
   ::selection {
-    background: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+  }
+
+  /* Hide scrollbar */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
 @layer utilities {
-  /* Letter spacing utilities */
-  .tracking-ultra-wide {
-    letter-spacing: 0.3em;
+  /* Font utilities */
+  .font-display {
+    font-family: 'Space Grotesk', sans-serif;
   }
 
-  /* Gradient text */
-  .text-gradient {
-    background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--muted-foreground)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .font-mono {
+    font-family: 'Space Mono', monospace;
   }
 
-  /* Hover underline effect */
-  .hover-line {
-    @apply relative;
+  /* Animation utilities */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
-  .hover-line::after {
-    content: '';
-    @apply absolute bottom-0 left-0 w-0 h-px bg-foreground transition-all duration-300;
-  }
-
-  .hover-line:hover::after {
-    @apply w-full;
-  }
-
-  /* Fade in animation */
-  .fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
-  }
-
-  @keyframes fadeInUp {
+  @keyframes slide-up {
     from {
       opacity: 0;
       transform: translateY(20px);
@@ -162,15 +145,24 @@
     }
   }
 
-  /* Stagger children animations */
-  .stagger-children > * {
-    opacity: 0;
-    animation: fadeInUp 0.6s ease-out forwards;
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 
-  .stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
-  .stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
-  .stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
-  .stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
-  .stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.6s ease-out forwards;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+  }
 }

@@ -1,56 +1,96 @@
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
+import Logo from './Logo';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
+  const socialLinks = [
+    { name: 'LinkedIn', href: '#' },
+    { name: 'GitHub', href: '#' },
+    { name: 'Twitter', href: '#' },
+    { name: 'Dribbble', href: '#' },
+  ];
+
   return (
-    <motion.footer
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="py-8 px-6 md:px-12 border-t border-border"
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Logo */}
-          <div className="flex items-center gap-4">
-            <div className="grid grid-cols-2 gap-0.5 w-6 h-6">
-              {["J", "S", "C", "L"].map((letter) => (
-                <div
-                  key={letter}
-                  className="w-full h-full bg-foreground text-background flex items-center justify-center text-[6px] font-semibold"
+    <footer className="py-16 border-t border-border bg-transparent relative">
+      <div className="max-w-7xl mx-auto px-6">
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+          
+          {/* Logo & Tagline */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col items-start"
+          >
+            <Logo size="sm" animated={false} withSubtitle={false} />
+            <p className="mt-4 text-sm text-muted-foreground font-light max-w-xs">
+              Crafting digital experiences with precision and purpose.
+            </p>
+          </motion.div>
+
+          {/* Navigation */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="flex flex-col items-start md:items-center"
+          >
+            <span className="text-xs font-mono text-muted-foreground mb-4 tracking-widest">NAVIGATE</span>
+            <nav className="flex flex-col md:flex-row gap-4 md:gap-8">
+              <a href="#projects" className="text-sm hover:text-muted-foreground transition-colors">Projects</a>
+              <a href="#about" className="text-sm hover:text-muted-foreground transition-colors">About</a>
+              <a href="#contact" className="text-sm hover:text-muted-foreground transition-colors">Contact</a>
+            </nav>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="flex flex-col items-start md:items-end"
+          >
+            <span className="text-xs font-mono text-muted-foreground mb-4 tracking-widest">CONNECT</span>
+            <div className="flex gap-6">
+              {socialLinks.map((link) => (
+                <a 
+                  key={link.name}
+                  href={link.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {letter}
-                </div>
+                  {link.name}
+                </a>
               ))}
             </div>
-            <span className="text-xs font-mono text-muted-foreground">
-              © {currentYear} JSCL Design
-            </span>
-          </div>
+          </motion.div>
 
-          {/* Links */}
-          <div className="flex items-center gap-6">
-            {["Twitter", "LinkedIn", "Dribbble", "GitHub"].map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200"
-              >
-                {link}
-              </a>
-            ))}
-          </div>
-
-          {/* Status */}
-          <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
-            <span className="inline-block w-1.5 h-1.5 bg-accent-green rounded-full animate-pulse"></span>
-            <span>Available for work</span>
-          </div>
         </div>
+
+        {/* Bottom Bar */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4"
+        >
+          <p className="text-xs font-mono text-muted-foreground">
+            © {currentYear} JSCL. All rights reserved.
+          </p>
+          <p className="text-xs font-mono text-muted-foreground">
+            Designed & Built with precision
+          </p>
+        </motion.div>
+
       </div>
-    </motion.footer>
+    </footer>
   );
 };
 
