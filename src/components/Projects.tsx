@@ -117,7 +117,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project, index }) => {
                                 src={imgSrc}
                                 alt={project.title} 
                                 onError={handleImageError}
-                                className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-105 transition-all duration-1000 ease-out"
+                                className="w-full h-full object-contain object-left-top grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-105 transition-all duration-1000 ease-out"
                             />
                         </>
                     )}
