@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Manrope", "sans-serif"],
-        display: ["Space Grotesk", "sans-serif"],
-        mono: ["Space Mono", "monospace"],
+        sans: ["'Manrope'", "sans-serif"],
+        display: ["'Space Grotesk'", "sans-serif"],
+        mono: ["'Space Mono'", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
