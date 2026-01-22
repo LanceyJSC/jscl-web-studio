@@ -43,7 +43,7 @@ export const projects: Project[] = [
     slug: 'noteflow',
     title: 'NoteFlow',
     category: 'Productivity App',
-    year: '2024',
+    year: '2025',
     image: noteflowPreview,
     externalLink: 'https://jscl.lovable.app',
     headline: 'Streamlined task and note management',
