@@ -2,45 +2,54 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '@/data/projects';
-
 const Projects: React.FC = () => {
-  return (
-    <section id="projects" className="py-24 relative">
+  return <section id="projects" className="py-24 relative">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-end justify-between mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-10%" }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter"
-          >
+          <motion.h2 initial={{
+          opacity: 0,
+          x: -50
+        }} whileInView={{
+          opacity: 1,
+          x: 0
+        }} viewport={{
+          once: false,
+          margin: "-10%"
+        }} transition={{
+          duration: 0.8
+        }} className="text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter">
             Selected <span className="text-gray-400 font-light">Works</span>
           </motion.h2>
-          <motion.span 
-             initial={{ opacity: 0 }}
-             whileInView={{ opacity: 1 }}
-             viewport={{ once: false, margin: "-10%" }}
-             transition={{ delay: 0.5, duration: 0.5 }}
-             className="hidden md:block text-[10px] font-mono tracking-widest text-gray-500 mb-1"
-          >
+          <motion.span initial={{
+          opacity: 0
+        }} whileInView={{
+          opacity: 1
+        }} viewport={{
+          once: false,
+          margin: "-10%"
+        }} transition={{
+          delay: 0.5,
+          duration: 0.5
+        }} className="hidden md:block text-[10px] font-mono tracking-widest text-gray-500 mb-1">
             ( {projects.length} ) PROJECTS
           </motion.span>
         </div>
 
         {/* List Container */}
         <div className="flex flex-col">
-          {projects.map((project, index) => (
-            <ProjectItem key={project.id} project={project} index={index} />
-          ))}
+          {projects.map((project, index) => <ProjectItem key={project.id} project={project} index={index} />)}
           {/* Closing Line */}
-          <motion.div 
-            initial={{ scaleX: 0 }} 
-            whileInView={{ scaleX: 1 }} 
-            viewport={{ once: false, margin: "-50px" }}
-            transition={{ duration: 0.8, ease: "circOut" }}
-            className="border-t border-gray-200 origin-left"
-          ></motion.div>
+          <motion.div initial={{
+          scaleX: 0
+        }} whileInView={{
+          scaleX: 1
+        }} viewport={{
+          once: false,
+          margin: "-50px"
+        }} transition={{
+          duration: 0.8,
+          ease: "circOut"
+        }} className="border-t border-gray-200 origin-left"></motion.div>
         </div>
 
         <div className="mt-20 text-center">
@@ -49,38 +58,39 @@ const Projects: React.FC = () => {
             </Link>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 interface ProjectItemProps {
   project: typeof projects[0];
   index: number;
 }
-
-const ProjectItem: React.FC<ProjectItemProps> = ({ project, index }) => {
-    const [imgSrc, setImgSrc] = useState(project.image);
-    const [hasError, setHasError] = useState(false);
-    
-    const handleImageError = () => {
-        if (!project.image.startsWith('http') && !project.image.startsWith('/') && !project.image.startsWith('data:')) {
-             setImgSrc('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2670&auto=format&fit=crop');
-        } else {
-            setHasError(true);
-        }
-    };
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-        >
-            <Link 
-                to={`/project/${project.slug}`}
-                className="group relative border-t border-gray-200 py-12 flex flex-col md:flex-row gap-8 md:items-center justify-between transition-all duration-500 hover:bg-gray-50 block"
-            >
+const ProjectItem: React.FC<ProjectItemProps> = ({
+  project,
+  index
+}) => {
+  const [imgSrc, setImgSrc] = useState(project.image);
+  const [hasError, setHasError] = useState(false);
+  const handleImageError = () => {
+    if (!project.image.startsWith('http') && !project.image.startsWith('/') && !project.image.startsWith('data:')) {
+      setImgSrc('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2670&auto=format&fit=crop');
+    } else {
+      setHasError(true);
+    }
+  };
+  return <motion.div initial={{
+    opacity: 0,
+    y: 20
+  }} whileInView={{
+    opacity: 1,
+    y: 0
+  }} viewport={{
+    once: false,
+    margin: "-50px"
+  }} transition={{
+    duration: 0.5,
+    delay: index * 0.1
+  }}>
+            <Link to={`/project/${project.slug}`} className="group relative border-t border-gray-200 py-12 flex flex-col md:flex-row gap-8 md:items-center justify-between transition-all duration-500 hover:bg-gray-50 block">
                 {/* Left Section: Index + Title */}
                 <div className="flex items-start md:items-center gap-8 md:w-5/12">
                     {/* Index */}
@@ -101,31 +111,22 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project, index }) => {
 
                 {/* Middle Section: Image or Fallback */}
                 <div className="md:w-5/12 h-48 md:h-40 overflow-hidden relative transition-all duration-700 bg-gray-100 group-hover:bg-gray-200">
-                    {hasError ? (
-                        <div className="w-full h-full flex flex-col items-center justify-center border border-gray-200 bg-gray-50 p-4 text-center">
+                    {hasError ? <div className="w-full h-full flex flex-col items-center justify-center border border-gray-200 bg-gray-50 p-4 text-center">
                             <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-red-400 mb-1">
                                 Img Error
                             </span>
                             <span className="text-[8px] font-mono text-gray-400 break-all">
                                {project.title}
                             </span>
-                        </div>
-                    ) : (
-                        <>
+                        </div> : <>
                             <div className="absolute inset-0 bg-gray-100/10 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 z-10" />
-                            <img 
-                                src={imgSrc}
-                                alt={project.title} 
-                                onError={handleImageError}
-                                className="w-full h-full object-cover object-left-top grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-105 transition-all duration-1000 ease-out"
-                            />
-                        </>
-                    )}
+                            <img src={imgSrc} alt={project.title} onError={handleImageError} className="w-full h-full object-cover object-left-top grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-105 transition-all duration-1000 ease-out" />
+                        </>}
                 </div>
 
                 {/* Right Section: Meta & Action */}
                 <div className="flex items-center justify-between md:justify-end gap-8 md:w-2/12">
-                     <span className="text-xs font-mono text-gray-400 group-hover:text-black transition-colors">
+                     <span className="text-xs text-gray-400 group-hover:text-black transition-colors text-center font-serif">
                         {project.year}
                      </span>
                      
@@ -136,8 +137,6 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project, index }) => {
                      </div>
                 </div>
             </Link>
-        </motion.div>
-    );
-}
-
+        </motion.div>;
+};
 export default Projects;
