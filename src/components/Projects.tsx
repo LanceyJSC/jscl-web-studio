@@ -1,149 +1,187 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface Project {
-  id: string;
+  id: number;
   title: string;
   category: string;
   year: string;
   image: string;
-  link?: string;
+  link: string;
 }
 
 const projects: Project[] = [
   {
-    id: '01',
-    title: 'Helix Finance',
-    category: 'Web Design / Development',
+    id: 1,
+    title: 'Sceneburn',
+    category: 'Film & TV Tracker',
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop',
-    link: '#'
+    image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2525&auto=format&fit=crop', 
+    link: 'https://sceneburn.com/',
   },
   {
-    id: '02',
-    title: 'Verdant Studio',
-    category: 'Brand Identity / Website',
-    year: '2024',
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=800&fit=crop',
-    link: '#'
-  },
-  {
-    id: '03',
-    title: 'Nexus Platform',
-    category: 'UI/UX Design / Development',
+    id: 2,
+    title: 'Apex Finance',
+    category: 'Trading Interface',
     year: '2023',
-    image: 'https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1200&h=800&fit=crop',
-    link: '#'
+    image: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=2670&auto=format&fit=crop',
+    link: '#',
   },
   {
-    id: '04',
-    title: 'Apex Dynamics',
-    category: 'Full Stack Application',
+    id: 3,
+    title: 'Vanguard Capital',
+    category: 'Investment Banking',
     year: '2023',
-    image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&h=800&fit=crop',
-    link: '#'
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop',
+    link: '#',
   },
   {
-    id: '05',
-    title: 'Lumina Arts',
-    category: 'Creative Direction / Web',
-    year: '2023',
-    image: 'https://images.unsplash.com/photo-1493612276216-ee3925520721?w=1200&h=800&fit=crop',
-    link: '#'
+    id: 4,
+    title: 'Helix Health',
+    category: 'Biotech Dashboard',
+    year: '2022',
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2670&auto=format&fit=crop',
+    link: '#',
+  },
+  {
+    id: 5,
+    title: 'Mono Architectural',
+    category: 'Real Estate',
+    year: '2022',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2670&auto=format&fit=crop',
+    link: '#',
   }
 ];
 
 const Projects: React.FC = () => {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    setMousePosition({ x: e.clientX, y: e.clientY });
-  };
-
   return (
-    <section id="projects" className="py-32 relative bg-transparent">
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
-        {/* Section Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 flex justify-between items-end border-b border-border pb-6"
-        >
-          <div>
-            <span className="text-xs font-mono text-muted-foreground mb-2 block tracking-widest">// SELECTED WORK</span>
-            <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tight">Projects</h2>
-          </div>
-          <span className="text-sm font-mono text-muted-foreground hidden md:block">2023 — 2024</span>
-        </motion.div>
-
-        {/* Project List */}
-        <div className="space-y-0" onMouseMove={handleMouseMove}>
-          {projects.map((project, index) => (
-            <motion.a
-              key={project.id}
-              href={project.link}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: index * 0.1 }}
-              className="group block border-b border-border py-8 relative"
-              onMouseEnter={() => setHoveredId(project.id)}
-              onMouseLeave={() => setHoveredId(null)}
-            >
-              <div className="flex items-center justify-between">
-                {/* Left: Number & Title */}
-                <div className="flex items-center gap-8">
-                  <span className="text-xs font-mono text-muted-foreground w-8">{project.id}</span>
-                  <h3 className="text-2xl md:text-4xl font-display font-medium group-hover:translate-x-4 transition-transform duration-300">
-                    {project.title}
-                  </h3>
-                </div>
-                
-                {/* Right: Category & Year */}
-                <div className="hidden md:flex items-center gap-12 text-sm text-muted-foreground">
-                  <span className="font-mono">{project.category}</span>
-                  <span className="font-mono">{project.year}</span>
-                  <motion.span 
-                    className="text-xl"
-                    animate={{ x: hoveredId === project.id ? 5 : 0 }}
-                  >
-                    →
-                  </motion.span>
-                </div>
-              </div>
-            </motion.a>
-          ))}
+    <section id="projects" className="py-24 relative">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex items-end justify-between mb-16">
+          <motion.h2 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-10%" }}
+            transition={{ duration: 0.8 }}
+            className="text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter"
+          >
+            Selected <span className="text-muted-foreground font-light">Works</span>
+          </motion.h2>
+          <motion.span 
+             initial={{ opacity: 0 }}
+             whileInView={{ opacity: 1 }}
+             viewport={{ once: false, margin: "-10%" }}
+             transition={{ delay: 0.5, duration: 0.5 }}
+             className="hidden md:block text-[10px] font-mono tracking-widest text-muted-foreground mb-1"
+          >
+            ( {projects.length} ) PROJECTS
+          </motion.span>
         </div>
 
-        {/* Floating Image Preview */}
-        <AnimatePresence>
-          {hoveredId && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
-              className="fixed pointer-events-none z-50 w-80 h-52 overflow-hidden shadow-2xl hidden md:block"
-              style={{
-                left: mousePosition.x + 20,
-                top: mousePosition.y - 100,
-              }}
-            >
-              <img
-                src={projects.find(p => p.id === hoveredId)?.image}
-                alt=""
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* List Container */}
+        <div className="flex flex-col">
+          {projects.map((project, index) => (
+            <ProjectItem key={project.id} project={project} index={index} />
+          ))}
+          {/* Closing Line */}
+          <motion.div 
+            initial={{ scaleX: 0 }} 
+            whileInView={{ scaleX: 1 }} 
+            viewport={{ once: false, margin: "-50px" }}
+            transition={{ duration: 0.8, ease: "circOut" }}
+            className="border-t border-border origin-left"
+          ></motion.div>
+        </div>
 
+        <div className="mt-20 text-center">
+            <a href="#" className="inline-block px-10 py-4 border border-foreground text-xs font-mono uppercase tracking-widest hover:bg-foreground hover:text-background transition-all duration-300">
+                View All Projects
+            </a>
+        </div>
       </div>
     </section>
   );
 };
+
+const ProjectItem: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
+    const [imgSrc, setImgSrc] = useState(project.image);
+    const [hasError, setHasError] = useState(false);
+    
+    const handleImageError = () => {
+        if (!project.image.startsWith('http')) {
+             setImgSrc('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2670&auto=format&fit=crop');
+        } else {
+            setHasError(true);
+        }
+    };
+
+    return (
+        <motion.a 
+            href={project.link}
+            target={project.link.startsWith('http') ? "_blank" : "_self"}
+            rel={project.link.startsWith('http') ? "noopener noreferrer" : undefined}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="group relative border-t border-border py-12 flex flex-col md:flex-row gap-8 md:items-center justify-between transition-all duration-500 hover:bg-secondary/50"
+        >
+            {/* Left Section: Index + Title */}
+            <div className="flex items-start md:items-center gap-8 md:w-5/12">
+                {/* Index */}
+                <span className="text-xs font-mono text-muted-foreground/50 group-hover:text-foreground transition-colors shrink-0 pt-2 md:pt-0">
+                    0{index + 1}
+                </span>
+
+                {/* Title & Category */}
+                <div>
+                    <h3 className="text-3xl font-display font-light group-hover:translate-x-2 transition-transform duration-500">
+                        {project.title}
+                    </h3>
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mt-2 block group-hover:translate-x-2 transition-transform duration-500 delay-75">
+                        {project.category}
+                    </span>
+                </div>
+            </div>
+
+            {/* Middle Section: Image or Fallback */}
+            <div className="md:w-5/12 h-48 md:h-40 overflow-hidden relative transition-all duration-700 bg-muted group-hover:bg-muted/80">
+                {hasError ? (
+                    <div className="w-full h-full flex flex-col items-center justify-center border border-border bg-secondary p-4 text-center">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-destructive mb-1">
+                            Img Error
+                        </span>
+                        <span className="text-[8px] font-mono text-muted-foreground break-all">
+                           {project.title}
+                        </span>
+                    </div>
+                ) : (
+                    <>
+                        <div className="absolute inset-0 bg-muted/10 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 z-10" />
+                        <img 
+                            src={imgSrc}
+                            alt={project.title} 
+                            onError={handleImageError}
+                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transform scale-100 group-hover:scale-110 transition-all duration-1000 ease-out"
+                        />
+                    </>
+                )}
+            </div>
+
+            {/* Right Section: Meta & Action */}
+            <div className="flex items-center justify-between md:justify-end gap-8 md:w-2/12">
+                 <span className="text-xs font-mono text-muted-foreground group-hover:text-foreground transition-colors">
+                    {project.year}
+                 </span>
+                 
+                 <div className="w-10 h-10 rounded-full border border-border flex items-center justify-center group-hover:bg-foreground group-hover:border-foreground transition-all duration-300">
+                    <svg className="w-3 h-3 text-foreground group-hover:text-background transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                 </div>
+            </div>
+        </motion.a>
+    );
+}
 
 export default Projects;
