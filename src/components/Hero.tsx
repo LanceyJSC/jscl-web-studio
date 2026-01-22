@@ -23,11 +23,11 @@ const Hero: React.FC = () => {
             transition={{ duration: 1.5, ease: "easeInOut", delay: 1 }}
             className="w-full max-w-4xl border-t border-b border-black/10 py-6 my-6 flex flex-col md:flex-row justify-between items-center text-xs font-mono tracking-widest text-gray-500 gap-4 overflow-hidden whitespace-nowrap"
           >
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>EST. 2024</motion.span>
+             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>EST. 2025</motion.span>
              <span className="hidden md:inline-block w-12 h-[1px] bg-black/20"></span>
              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}>DIGITAL ARCHITECT</motion.span>
              <span className="hidden md:inline-block w-12 h-[1px] bg-black/20"></span>
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }}>BASED IN LONDON</motion.span>
+             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }}>BASED IN SOUTH WALES</motion.span>
           </motion.div>
 
           {/* Staggered Text Reveal for Description */}
