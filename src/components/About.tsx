@@ -9,13 +9,13 @@ const About: React.FC = () => {
   return (
     <section id="about" className="py-32 relative bg-transparent">
       
-      <div className="max-w-7xl mx-auto px-6 relative z-10 text-foreground">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 text-black">
         {/* Grid setup: Default alignment stretches columns, enabling sticky behavior */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           
           <div className="relative">
              <motion.div style={{ y: y1 }} className="sticky top-32">
-                <div className="font-display text-5xl md:text-7xl font-bold leading-none mb-8 opacity-90 text-foreground">
+                <div className="font-display text-5xl md:text-7xl font-bold leading-none mb-8 opacity-90 text-black">
                   <TextReveal delay={0.1}>DIGITAL</TextReveal>
                   <br />
                   <TextReveal delay={0.3}>CRAFTSMAN</TextReveal>
@@ -26,7 +26,7 @@ const About: React.FC = () => {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: false, margin: "-10%" }}
                   transition={{ delay: 0.5, duration: 0.8 }}
-                  className="text-xl text-muted-foreground font-light max-w-md leading-relaxed"
+                  className="text-xl text-gray-600 font-light max-w-md leading-relaxed"
                 >
                   I build digital products that are clean, efficient, and future-proof.
                 </motion.p>
@@ -41,8 +41,8 @@ const About: React.FC = () => {
                viewport={{ once: false, margin: "-10%" }}
                transition={{ duration: 0.8 }}
              >
-                <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-4 block">01 / Philosophy</span>
-                <p className="text-2xl font-light leading-normal text-foreground/80">
+                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 block">01 / Philosophy</span>
+                <p className="text-2xl font-light leading-normal text-gray-800">
                   "Design is intelligence made visible." I believe in stripping away the non-essential to reveal the core message. My process is deeply collaborative, ensuring every pixel serves a purpose.
                 </p>
              </motion.div>
@@ -54,7 +54,7 @@ const About: React.FC = () => {
                viewport={{ once: false, margin: "-10%" }}
                transition={{ duration: 0.8, delay: 0.2 }}
              >
-                <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-8 block">02 / Tech Stack</span>
+                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8 block">02 / Tech Stack</span>
                 <div className="grid grid-cols-2 gap-y-8 gap-x-4">
                    {[
                       { title: "Frontend", items: ["React", "TypeScript", "Next.js", "Tailwind"] },
@@ -69,10 +69,10 @@ const About: React.FC = () => {
                         viewport={{ once: false, margin: "-50px" }}
                         transition={{ delay: 0.2 + (i * 0.1) }}
                       >
-                         <h4 className="text-foreground font-bold mb-4">
+                         <h4 className="text-black font-bold mb-4">
                             <TextReveal delay={0.2 + (i * 0.1)}>{group.title}</TextReveal>
                          </h4>
-                         <ul className="space-y-2 text-muted-foreground font-mono text-sm">
+                         <ul className="space-y-2 text-gray-500 font-mono text-sm">
                             {group.items.map(item => <li key={item}>{item}</li>)}
                          </ul>
                       </motion.div>
