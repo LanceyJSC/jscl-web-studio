@@ -8,18 +8,18 @@ const TechnicalGrid: React.FC = () => {
       <div 
         className="absolute inset-0 opacity-[0.03]"
         style={{
-            backgroundImage: `linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(to right, black 1px, transparent 1px), linear-gradient(to bottom, black 1px, transparent 1px)`,
             backgroundSize: '80px 80px'
         }}
       />
 
       {/* Static Version Marker */}
-      <div className="absolute top-32 right-6 font-mono text-[8px] text-muted-foreground [writing-mode:vertical-rl] tracking-widest opacity-50">
+      <div className="absolute top-32 right-6 font-mono text-[8px] text-gray-400 [writing-mode:vertical-rl] tracking-widest opacity-50">
         SYSTEM.V.2.4 // READY
       </div>
       
       {/* Static System Status */}
-      <div className="absolute bottom-10 left-10 font-mono text-[8px] text-muted-foreground opacity-60 hidden md:block">
+      <div className="absolute bottom-10 left-10 font-mono text-[8px] text-gray-400 opacity-60 hidden md:block">
         MEM: 4096 / CPU: OPTIMAL
       </div>
     </div>
