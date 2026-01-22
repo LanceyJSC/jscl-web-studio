@@ -1,4 +1,5 @@
 import sceneburnPreview from '@/assets/projects/sceneburn-preview.png';
+import sceneburnHero from '@/assets/projects/sceneburn-hero.png';
 import noteflowPreview from '@/assets/projects/noteflow-preview.png';
 
 export interface Project {
@@ -36,7 +37,7 @@ export const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'PostgreSQL', 'TMDB API'],
     role: 'Lead Designer & Frontend Developer',
     duration: '6 months',
-    screenshots: [sceneburnPreview],
+    screenshots: [sceneburnHero, sceneburnPreview],
   },
   {
     id: 2,
