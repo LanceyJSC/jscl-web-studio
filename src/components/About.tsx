@@ -24,7 +24,7 @@ const About: React.FC = () => {
                 <motion.p 
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  viewport={{ once: false, margin: "-10%" }}
+                  viewport={{ once: true, margin: "-10%" }}
                   transition={{ delay: 0.5, duration: 0.8 }}
                   className="text-xl text-gray-600 font-light max-w-md leading-relaxed"
                 >
@@ -38,7 +38,7 @@ const About: React.FC = () => {
              <motion.div
                initial={{ opacity: 0, x: 50 }}
                whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: false, margin: "-10%" }}
+               viewport={{ once: true, margin: "-10%" }}
                transition={{ duration: 0.8 }}
              >
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 block">01 / Philosophy</span>
@@ -51,7 +51,7 @@ const About: React.FC = () => {
              <motion.div
                initial={{ opacity: 0, x: 50 }}
                whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: false, margin: "-10%" }}
+               viewport={{ once: true, margin: "-10%" }}
                transition={{ duration: 0.8, delay: 0.2 }}
              >
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8 block">02 / Tech Stack</span>
@@ -66,7 +66,7 @@ const About: React.FC = () => {
                         key={group.title}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: false, margin: "-50px" }}
+                        viewport={{ once: true, margin: "-50px" }}
                         transition={{ delay: 0.2 + (i * 0.1) }}
                       >
                          <h4 className="text-black font-bold mb-4">
