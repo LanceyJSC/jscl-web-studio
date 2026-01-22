@@ -28,7 +28,7 @@ const Contact: React.FC = () => {
   };
 
   const copyEmail = () => {
-    navigator.clipboard.writeText('hello@jscl.design');
+    navigator.clipboard.writeText('jsclancey@gmail.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -48,7 +48,7 @@ const Contact: React.FC = () => {
                 viewport={{ once: true }}
                 className="text-xs font-mono text-gray-500 mb-6 block tracking-widest"
               >
-                // CONTACT_INIT
+                CONTACT
               </motion.span>
               
               <motion.h2 
@@ -84,7 +84,7 @@ const Contact: React.FC = () => {
                 onClick={copyEmail}
                 className="relative text-2xl md:text-3xl font-display font-medium hover:text-gray-600 transition-colors text-left w-full flex items-center gap-4"
               >
-                hello@jscl.design
+                jsclancey@gmail.com
                 <AnimatePresence mode="wait">
                   {copied ? (
                     <motion.span 
@@ -132,7 +132,7 @@ const Contact: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="space-y-1">
                 <label htmlFor="name" className="block text-xs font-mono font-bold uppercase text-gray-500">
-                  01 // NAME
+                  01 NAME
                 </label>
                 <input 
                   type="text" 
@@ -141,13 +141,13 @@ const Contact: React.FC = () => {
                   value={formState.name}
                   onChange={(e) => setFormState({...formState, name: e.target.value})}
                   className="w-full bg-transparent border-b border-gray-200 py-3 font-mono text-sm focus:outline-none focus:border-black transition-colors placeholder-gray-300" 
-                  placeholder="Enter your name_" 
+                  placeholder="Enter your name" 
                 />
               </div>
 
               <div className="space-y-1">
                 <label htmlFor="email" className="block text-xs font-mono font-bold uppercase text-gray-500">
-                  02 // EMAIL
+                  02 EMAIL
                 </label>
                 <input 
                   type="email" 
@@ -156,13 +156,13 @@ const Contact: React.FC = () => {
                   value={formState.email}
                   onChange={(e) => setFormState({...formState, email: e.target.value})}
                   className="w-full bg-transparent border-b border-gray-200 py-3 font-mono text-sm focus:outline-none focus:border-black transition-colors placeholder-gray-300" 
-                  placeholder="Enter your email_" 
+                  placeholder="Enter your email" 
                 />
               </div>
 
               <div className="space-y-1">
                 <label htmlFor="message" className="block text-xs font-mono font-bold uppercase text-gray-500">
-                  03 // MESSAGE
+                  03 MESSAGE
                 </label>
                 <textarea 
                   id="message" 
@@ -171,7 +171,7 @@ const Contact: React.FC = () => {
                   value={formState.message}
                   onChange={(e) => setFormState({...formState, message: e.target.value})}
                   className="w-full bg-transparent border-b border-gray-200 py-3 font-mono text-sm focus:outline-none focus:border-black transition-colors placeholder-gray-300 resize-none" 
-                  placeholder="Project details or just hello_" 
+                  placeholder="Project details or just hello" 
                 ></textarea>
               </div>
 
