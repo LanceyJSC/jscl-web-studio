@@ -46,29 +46,29 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     y.set(0.5);
   };
 
-  // Dimensions & Styles - Mobile-first responsive sizing
+  // Dimensions & Styles
   const sizeClasses = {
     sm: 'w-10 h-10',
     md: 'w-24 h-24',
-    lg: 'w-32 h-32 md:w-48 md:h-48',
-    xl: 'w-40 h-40 md:w-64 md:h-64',
-    '2xl': 'w-48 h-48 md:w-80 md:h-80',
+    lg: 'w-48 h-48',
+    xl: 'w-64 h-64',
+    '2xl': 'w-80 h-80',
   };
 
   const textClasses = {
     sm: 'text-[12px]',
     md: 'text-3xl',
-    lg: 'text-4xl md:text-6xl',
-    xl: 'text-5xl md:text-8xl',
-    '2xl': 'text-6xl md:text-9xl',
+    lg: 'text-6xl',
+    xl: 'text-8xl',
+    '2xl': 'text-9xl',
   };
 
   const subtitleClasses = {
     sm: 'text-[6px] mt-1',
     md: 'text-[10px] mt-2',
-    lg: 'text-xs md:text-sm mt-3 md:mt-4',
-    xl: 'text-sm md:text-lg mt-4 md:mt-6',
-    '2xl': 'text-sm md:text-xl mt-4 md:mt-8',
+    lg: 'text-sm mt-4',
+    xl: 'text-lg mt-6',
+    '2xl': 'text-xl mt-8',
   };
 
   const showSubtitle = withSubtitle !== undefined 
@@ -105,7 +105,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
         
         {/* Top Line: Left to Right */}
         <motion.div 
-            className="absolute top-0 left-0 right-0 h-px bg-foreground origin-left"
+            className="absolute top-0 left-0 right-0 h-px bg-black origin-left"
             initial={{ scaleX: animated ? 0 : 1 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: 0 }}
@@ -113,7 +113,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
         
         {/* Right Line: Top to Bottom */}
         <motion.div 
-            className="absolute top-0 right-0 bottom-0 w-px bg-foreground origin-top"
+            className="absolute top-0 right-0 bottom-0 w-px bg-black origin-top"
             initial={{ scaleY: animated ? 0 : 1 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration : 0 }}
@@ -121,7 +121,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
 
         {/* Bottom Line: Right to Left */}
         <motion.div 
-            className="absolute bottom-0 right-0 left-0 h-px bg-foreground origin-right"
+            className="absolute bottom-0 right-0 left-0 h-px bg-black origin-right"
             initial={{ scaleX: animated ? 0 : 1 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration * 2 : 0 }}
@@ -129,7 +129,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
 
         {/* Left Line: Bottom to Top */}
         <motion.div 
-            className="absolute bottom-0 left-0 top-0 w-px bg-foreground origin-bottom"
+            className="absolute bottom-0 left-0 top-0 w-px bg-black origin-bottom"
             initial={{ scaleY: animated ? 0 : 1 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration * 3 : 0 }}
@@ -137,14 +137,14 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
 
         {/* --- Internal Crosshairs --- */}
         <motion.div 
-          className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-foreground pointer-events-none" 
+          className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-black pointer-events-none" 
           style={{ translateZ: 10 }} 
           initial={{ scaleY: animated ? 0 : 1 }}
           animate={{ scaleY: 1 }}
           transition={{ duration: 0.5, ease: "circOut", delay: animated ? duration * 4 : 0 }}
         />
         <motion.div 
-          className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-foreground pointer-events-none" 
+          className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-black pointer-events-none" 
           style={{ translateZ: 10 }} 
           initial={{ scaleX: animated ? 0 : 1 }}
           animate={{ scaleX: 1 }}
@@ -162,7 +162,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             <div className="relative" style={{ transform: "translateZ(40px)" }}>
                 {/* Masked Letter - Reveals Bottom-Up */}
                 <motion.span 
-                    className={`${textClasses[size]} font-sans font-medium text-foreground leading-none select-none block`}
+                    className={`${textClasses[size]} font-sans font-medium text-black leading-none select-none block`}
                     initial={{ clipPath: animated ? "inset(100% 0 0 0)" : "inset(0% 0 0 0)" }}
                     animate={{ clipPath: "inset(0% 0 0 0)" }}
                     transition={{ 
@@ -177,10 +177,9 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
                 {/* Scanner Line - Moves Bottom-Up along with the reveal */}
                 {animated && (
                   <motion.div
-                      className="absolute left-0 right-0 h-[2px] bg-foreground"
+                      className="absolute left-0 right-0 h-[2px] bg-black"
                       initial={{ bottom: "0%", opacity: 0 }}
-                      whileInView={{ bottom: "100%", opacity: [0, 1, 1, 0] }}
-                      viewport={{ once: true }}
+                      animate={{ bottom: "100%", opacity: [0, 1, 1, 0] }}
                       transition={{ 
                           duration: letterDuration, 
                           delay: (duration * 4.5) + (i * stagger), 
@@ -201,7 +200,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           animate={{ opacity: 1, clipPath: "inset(0 0 0 0)" }}
           transition={{ delay: animated ? duration * 6 : 0, duration: 0.8, ease: "circOut" }}
         >
-          <span className={`block font-sans tracking-[0.2em] md:tracking-[0.4em] text-foreground font-medium uppercase ${subtitleClasses[size]}`}>
+          <span className={`block font-sans tracking-[0.4em] text-black font-medium uppercase ${subtitleClasses[size]}`}>
             Web Designer
           </span>
         </motion.div>

@@ -74,7 +74,7 @@ const Cursor: React.FC = () => {
       {/* Main Dot - fixed position, no lag (Raw Mouse Position) */}
       <div 
         ref={dotRef}
-        className="fixed top-0 left-0 w-2 h-2 bg-foreground rounded-full pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 w-2 h-2 bg-black rounded-full pointer-events-none z-[9999] hidden md:block"
         style={{ 
             width: '6px',
             height: '6px',
@@ -86,8 +86,8 @@ const Cursor: React.FC = () => {
       
       {/* Follower Circle - smooth physics lag */}
       <motion.div 
-        className={`fixed top-0 left-0 w-8 h-8 border border-foreground rounded-full pointer-events-none z-[9998] hidden md:block transition-colors duration-300 ${
-            isHovered ? 'bg-foreground mix-blend-difference border-transparent scale-150' : ''
+        className={`fixed top-0 left-0 w-8 h-8 border border-black rounded-full pointer-events-none z-[9998] hidden md:block transition-colors duration-300 ${
+            isHovered ? 'bg-black mix-blend-difference border-transparent scale-150' : ''
         }`}
         style={{ 
             x: cursorXSpring, 
