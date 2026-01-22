@@ -26,7 +26,7 @@ export const projects: Project[] = [
     slug: 'sceneburn',
     title: 'Sceneburn',
     category: 'Film & TV Tracker',
-    year: '2024',
+    year: '2025',
     image: sceneburnPreview,
     externalLink: 'https://sceneburn.com/',
     headline: 'A modern film and TV tracking experience',
