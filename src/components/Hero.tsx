@@ -9,10 +9,10 @@ const Hero: React.FC = () => {
         Hero Content 
         We use h-screen to make it a full immersive entry.
       */}
-      <div className="container mx-auto px-6 z-10 flex flex-col items-center justify-center h-full">
+      <div className="container mx-auto px-4 md:px-6 z-10 flex flex-col items-center justify-center h-full">
         
-        <div className="flex flex-col items-center">
-          <Logo size="2xl" className="mb-16" />
+        <div className="flex flex-col items-center w-full">
+          <Logo size="2xl" className="mb-8 md:mb-16" />
           
           <h1 className="sr-only">JSCL - Web Designer</h1>
           
@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "100%", opacity: 1 }}
             transition={{ duration: 1.5, ease: "easeInOut", delay: 1 }}
-            className="w-full max-w-4xl border-t border-b border-border py-6 my-6 flex flex-col md:flex-row justify-between items-center text-xs font-mono tracking-widest text-muted-foreground gap-4 overflow-hidden whitespace-nowrap"
+            className="w-full max-w-4xl border-t border-b border-border py-4 md:py-6 my-4 md:my-6 flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs font-mono tracking-widest text-muted-foreground gap-3 md:gap-4 overflow-hidden"
           >
              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>EST. 2024</motion.span>
              <span className="hidden md:inline-block w-12 h-[1px] bg-border"></span>
@@ -31,7 +31,7 @@ const Hero: React.FC = () => {
           </motion.div>
 
           {/* Staggered Text Reveal for Description */}
-          <div className="max-w-xl text-center text-lg font-light text-muted-foreground leading-relaxed mt-4 overflow-hidden">
+          <div className="max-w-xl text-center text-base md:text-lg font-light text-muted-foreground leading-relaxed mt-4 overflow-hidden px-4 md:px-0">
              <motion.p
                initial={{ y: "100%", opacity: 0 }}
                animate={{ y: 0, opacity: 1 }}
