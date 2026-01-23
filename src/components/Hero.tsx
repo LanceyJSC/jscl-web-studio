@@ -9,10 +9,12 @@ const Hero: React.FC = () => {
         Hero Content 
         We use h-screen to make it a full immersive entry.
       */}
-      <div className="container mx-auto px-6 z-10 flex flex-col items-center justify-center h-full">
+      <div className="container mx-auto px-4 sm:px-6 z-10 flex flex-col items-center justify-center h-full">
         
-        <div className="flex flex-col items-center">
-          <Logo size="2xl" className="mb-16" />
+        <div className="flex flex-col items-center w-full">
+          <div className="scale-75 sm:scale-100 md:scale-125">
+            <Logo size="xl" className="mb-8 md:mb-16" />
+          </div>
           
           <h1 className="sr-only">JSCL - Web Designer</h1>
           
@@ -21,7 +23,7 @@ const Hero: React.FC = () => {
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "100%", opacity: 1 }}
             transition={{ duration: 1.5, ease: "easeInOut", delay: 1 }}
-            className="w-full max-w-7xl border-t border-b border-black/10 py-6 my-6 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6 text-xs font-mono tracking-widest text-gray-500 overflow-hidden whitespace-nowrap px-6"
+            className="w-full max-w-7xl border-t border-b border-black/10 py-4 md:py-6 my-4 md:my-6 flex flex-col md:flex-row justify-center items-center gap-2 md:gap-6 text-[10px] md:text-xs font-mono tracking-widest text-gray-500 overflow-hidden px-4"
           >
              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>CREATIVE</motion.span>
              <span className="hidden md:inline-block w-8 h-[1px] bg-black/20"></span>
@@ -31,7 +33,7 @@ const Hero: React.FC = () => {
           </motion.div>
 
           {/* Staggered Text Reveal for Description */}
-          <div className="max-w-xl text-center text-lg font-light text-gray-600 leading-relaxed mt-4 overflow-hidden">
+          <div className="max-w-xl text-center text-base md:text-lg font-light text-gray-600 leading-relaxed mt-4 overflow-hidden px-4">
              <motion.p
                initial={{ y: "100%", opacity: 0 }}
                animate={{ y: 0, opacity: 1 }}
