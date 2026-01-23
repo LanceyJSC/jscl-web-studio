@@ -23,17 +23,17 @@ const Hero: React.FC = () => {
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "100%", opacity: 1 }}
             transition={{ duration: 1.5, ease: "easeInOut", delay: 1 }}
-            className="w-full max-w-7xl border-t border-b border-black/10 py-4 md:py-6 my-4 md:my-6 flex flex-col md:flex-row justify-center items-center gap-2 md:gap-6 text-[10px] md:text-xs font-mono tracking-widest text-gray-500 overflow-hidden px-4"
+            className="w-full max-w-7xl border-t border-b border-black/10 py-4 md:py-6 my-4 md:my-6 flex flex-col md:flex-row justify-center items-center gap-3 md:gap-6 text-[10px] md:text-xs font-mono tracking-widest text-gray-500 overflow-hidden px-4"
           >
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }}>CREATIVE</motion.span>
+             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="leading-relaxed">CREATIVE</motion.span>
              <span className="hidden md:inline-block w-8 h-[1px] bg-black/20"></span>
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }} className="text-black font-medium">DIGITAL ARCHITECT</motion.span>
+             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }} className="text-black font-medium leading-relaxed">DIGITAL ARCHITECT</motion.span>
              <span className="hidden md:inline-block w-8 h-[1px] bg-black/20"></span>
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }}>TECHNICAL</motion.span>
+             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }} className="leading-relaxed">TECHNICAL</motion.span>
           </motion.div>
 
           {/* Staggered Text Reveal for Description */}
-          <div className="max-w-xl text-center text-base md:text-lg font-light text-gray-600 leading-relaxed mt-4 overflow-hidden px-4">
+          <div className="max-w-xl text-center text-base md:text-lg font-light text-gray-600 leading-relaxed mt-6 md:mt-4 overflow-hidden px-4">
              <motion.p
                initial={{ y: "100%", opacity: 0 }}
                animate={{ y: 0, opacity: 1 }}

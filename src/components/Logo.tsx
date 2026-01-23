@@ -14,6 +14,9 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   const [isSpinning, setIsSpinning] = useState(false);
   const [gyroEnabled, setGyroEnabled] = useState(false);
   const isMobile = useIsMobile();
+  
+  // Detect iOS specifically (needs permission request on tap)
+  const isIOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   // 1. Mouse/Gyroscope Tracking (0 to 1)
   const x = useMotionValue(0.5);
@@ -63,14 +66,20 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     }
   };
 
-  // Cleanup gyroscope listener
+  // Auto-enable gyroscope for Android/non-iOS devices on mount
   useEffect(() => {
+    if (!animated || !isMobile || isIOS) return;
+    
+    // Non-iOS devices can enable gyro immediately without permission
+    if (window.DeviceOrientationEvent && !gyroEnabled) {
+      setGyroEnabled(true);
+      window.addEventListener('deviceorientation', handleDeviceOrientation);
+    }
+    
     return () => {
-      if (gyroEnabled) {
-        window.removeEventListener('deviceorientation', handleDeviceOrientation);
-      }
+      window.removeEventListener('deviceorientation', handleDeviceOrientation);
     };
-  }, [gyroEnabled]);
+  }, [animated, isMobile, isIOS, gyroEnabled]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     // Disable mouse interaction on mobile (use gyroscope instead)
