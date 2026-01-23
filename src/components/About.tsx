@@ -1,45 +1,20 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import TextReveal from './TextReveal';
 
 const About: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  // Parallax effects for different elements
-  const headingY = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [100, -30]);
-  const decorY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const { scrollYProgress } = useScroll();
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   return (
-    <section 
-      ref={containerRef}
-      id="about" 
-      className="py-16 md:py-32 relative bg-transparent overflow-hidden"
-    >
-      {/* Parallax Decorative Elements */}
-      <motion.div 
-        style={{ y: decorY }}
-        className="absolute top-20 right-10 w-40 h-40 border border-black/5 rotate-45 pointer-events-none"
-      />
-      <motion.div 
-        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -100]) }}
-        className="absolute bottom-40 left-10 w-24 h-24 border border-black/5 -rotate-12 pointer-events-none"
-      />
+    <section id="about" className="py-16 md:py-32 relative bg-transparent">
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-black">
         {/* Grid setup: Default alignment stretches columns, enabling sticky behavior */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16">
           
           <div className="relative pb-6 lg:pb-0">
-             <motion.div 
-               style={{ y: headingY }}
-               className="lg:sticky lg:top-32"
-             >
+             <div className="lg:sticky lg:top-32">
                 <div className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-none mb-4 md:mb-8 opacity-90 text-black">
                   <TextReveal delay={0.1}>DIGITAL</TextReveal>
                   <br />
@@ -55,13 +30,10 @@ const About: React.FC = () => {
                 >
                   I build digital products that are clean, efficient, and future-proof.
                 </motion.p>
-             </motion.div>
+             </div>
           </div>
 
-          <motion.div 
-            style={{ y: contentY }}
-            className="space-y-8 md:space-y-24"
-          >
+          <div className="space-y-8 md:space-y-24">
              {/* Philosophy Block */}
              <motion.div
                initial={{ opacity: 0, x: 50 }}
@@ -107,7 +79,7 @@ const About: React.FC = () => {
                    ))}
                 </div>
              </motion.div>
-          </motion.div>
+          </div>
           
         </div>
       </div>

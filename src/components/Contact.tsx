@@ -1,21 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import MagneticButton from './MagneticButton';
 import ContactSuccessAnimation from './ContactSuccessAnimation';
-
 const Contact: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  // Parallax effects
-  const leftY = useTransform(scrollYProgress, [0, 1], [60, -40]);
-  const rightY = useTransform(scrollYProgress, [0, 1], [100, -20]);
-  const decorY = useTransform(scrollYProgress, [0, 1], [0, -100]);
-
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -64,26 +51,13 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section 
-      ref={containerRef}
-      id="contact" 
-      className="py-16 md:py-32 relative bg-transparent overflow-hidden"
-    >
-      {/* Parallax Decorative Elements */}
-      <motion.div 
-        style={{ y: decorY }}
-        className="absolute top-20 right-20 w-36 h-36 border border-black/5 rotate-45 pointer-events-none"
-      />
-      <motion.div 
-        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -60]) }}
-        className="absolute bottom-32 left-16 w-20 h-20 border border-black/5 -rotate-12 pointer-events-none"
-      />
+    <section id="contact" className="py-16 md:py-32 relative bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
           
           {/* Left Column: Heading & Info */}
-          <motion.div style={{ y: leftY }} className="flex flex-col justify-between">
+          <div className="flex flex-col justify-between">
             <div>
             <motion.span 
                 initial={{ opacity: 0, x: -20 }}
@@ -156,11 +130,10 @@ const Contact: React.FC = () => {
                 </AnimatePresence>
               </button>
             </motion.div>
-          </motion.div>
+          </div>
 
           {/* Right Column: Technical Form */}
           <motion.div 
-            style={{ y: rightY }}
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
