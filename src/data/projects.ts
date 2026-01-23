@@ -1,5 +1,6 @@
 import sceneburnPreview from '@/assets/projects/sceneburn-preview.png';
 import noteflowPreview from '@/assets/projects/noteflow-preview.png';
+import refinematchPreview from '@/assets/projects/refinematch-preview.png';
 
 export interface Project {
   id: number;
@@ -54,6 +55,23 @@ export const projects: Project[] = [
     role: 'Full Stack Developer & Designer',
     duration: '4 months',
     screenshots: [noteflowPreview],
+  },
+  {
+    id: 3,
+    slug: 'refinematch',
+    title: 'RefineMatch',
+    category: 'AI Career Tool',
+    year: '2025',
+    image: refinematchPreview,
+    externalLink: 'https://refinematch.com/',
+    headline: 'AI-powered CV optimization for job seekers',
+    description: 'RefineMatch is an intelligent career optimization platform that analyzes CVs against job descriptions. It provides compatibility scores, identifies skill gaps, suggests keyword improvements, and generates tailored cover letters to maximize application success rates.',
+    challenge: 'Job seekers often struggle to tailor their CVs for specific positions, missing crucial keywords and failing to highlight relevant experience. The disconnect between what hiring systems look for and how candidates present themselves leads to qualified applicants being overlooked.',
+    solution: 'I built an AI-powered analysis engine that compares CVs against job requirements in real-time. The platform provides actionable insights including compatibility scores, keyword recommendations, and personalized cover letter generation - all wrapped in a clean, accessible interface.',
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'AI/LLM Integration', 'Supabase'],
+    role: 'Solo Developer & Designer',
+    duration: '3 months',
+    screenshots: [refinematchPreview],
   },
 ];
 
