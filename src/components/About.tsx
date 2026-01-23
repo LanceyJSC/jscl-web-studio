@@ -57,10 +57,10 @@ const About: React.FC = () => {
                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-8 block">02 / Tech Stack</span>
                 <div className="grid grid-cols-2 gap-y-8 gap-x-4">
                    {[
-                      { title: "Frontend", items: ["React", "TypeScript", "Next.js", "Tailwind"] },
-                      { title: "Creative", items: ["WebGL", "Framer Motion", "GSAP", "Three.js"] },
-                      { title: "Design", items: ["Figma", "Adobe CC", "Blender", "UI/UX"] },
-                      { title: "Backend", items: ["Node.js", "PostgreSQL", "Supabase", "AWS"] }
+                      { title: "Frontend", items: ["React", "TypeScript", "Vite", "Tailwind CSS"] },
+                      { title: "Animation", items: ["Framer Motion", "CSS Animations"] },
+                      { title: "Design", items: ["Figma", "UI/UX", "Responsive Design"] },
+                      { title: "Deployment", items: ["Vercel", "Git", "CI/CD"] }
                    ].map((group, i) => (
                       <motion.div 
                         key={group.title}
