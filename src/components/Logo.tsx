@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 interface LogoProps {
@@ -10,6 +10,7 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, animated = true }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isSpinning, setIsSpinning] = useState(false);
 
   // 1. Mouse Tracking (0 to 1)
   const x = useMotionValue(0.5);
@@ -44,6 +45,13 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     if (!animated) return;
     x.set(0.5);
     y.set(0.5);
+  };
+
+  const handleClick = () => {
+    if (!isSpinning) {
+      setIsSpinning(true);
+      setTimeout(() => setIsSpinning(false), 600);
+    }
   };
 
   // Dimensions & Styles
@@ -93,13 +101,16 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     >
       {/* 3D Container */}
       <motion.div 
-        className={`relative grid grid-cols-2 grid-rows-2 ${sizeClasses[size]} bg-transparent`}
+        className={`relative grid grid-cols-2 grid-rows-2 ${sizeClasses[size]} bg-transparent cursor-pointer`}
         style={{
           rotateX,
           rotateY,
           skewX,
           transformStyle: "preserve-3d", 
         }}
+        onClick={handleClick}
+        animate={{ rotateZ: isSpinning ? 360 : 0 }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
       >
         {/* --- Outer Frame Construction (Clockwise Drawing) --- */}
         
