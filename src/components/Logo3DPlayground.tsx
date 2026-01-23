@@ -1,345 +1,257 @@
 import React, { useRef, useState, Suspense } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { 
-  Text3D, 
-  Center, 
   Float, 
   Environment,
   OrbitControls,
   PerspectiveCamera,
-  useTexture
+  Html
 } from '@react-three/drei';
-import { Physics, RigidBody, CuboidCollider, RapierRigidBody } from '@react-three/rapier';
+import { Physics, RigidBody, CuboidCollider } from '@react-three/rapier';
+import type { RapierRigidBody } from '@react-three/rapier';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
 interface LetterCubeProps {
   letter: string;
-  position: [number, number, number];
+  initialPosition: [number, number, number];
   color: string;
-  index: number;
 }
 
-const LetterCube: React.FC<LetterCubeProps> = ({ letter, position, color, index }) => {
+const LetterCube: React.FC<LetterCubeProps> = ({ letter, initialPosition, color }) => {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
-  const meshRef = useRef<THREE.Mesh>(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const { camera, gl } = useThree();
-
-  const handlePointerDown = (e: any) => {
-    e.stopPropagation();
-    setIsDragging(true);
-    gl.domElement.style.cursor = 'grabbing';
-    
-    // Apply upward impulse when clicked
-    if (rigidBodyRef.current) {
-      rigidBodyRef.current.applyImpulse(
-        { x: (Math.random() - 0.5) * 15, y: 12, z: (Math.random() - 0.5) * 15 },
-        true
-      );
-      rigidBodyRef.current.applyTorqueImpulse(
-        { x: (Math.random() - 0.5) * 5, y: (Math.random() - 0.5) * 5, z: (Math.random() - 0.5) * 5 },
-        true
-      );
-    }
-  };
-
-  const handlePointerUp = () => {
-    setIsDragging(false);
-    gl.domElement.style.cursor = isHovered ? 'grab' : 'auto';
-  };
-
-  const handlePointerEnter = () => {
-    setIsHovered(true);
-    gl.domElement.style.cursor = 'grab';
-  };
-
-  const handlePointerLeave = () => {
-    setIsHovered(false);
-    if (!isDragging) {
-      gl.domElement.style.cursor = 'auto';
-    }
-  };
-
-  useFrame(() => {
-    if (meshRef.current && isHovered && !isDragging) {
-      meshRef.current.scale.lerp(new THREE.Vector3(1.1, 1.1, 1.1), 0.1);
-    } else if (meshRef.current) {
-      meshRef.current.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
-    }
-  });
-
-  return (
-    <RigidBody
-      ref={rigidBodyRef}
-      position={position}
-      restitution={0.7}
-      friction={0.3}
-      linearDamping={0.5}
-      angularDamping={0.5}
-      colliders="cuboid"
-    >
-      <mesh
-        ref={meshRef}
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        onPointerEnter={handlePointerEnter}
-        onPointerLeave={handlePointerLeave}
-        castShadow
-        receiveShadow
-      >
-        <boxGeometry args={[1.8, 1.8, 1.8]} />
-        <meshStandardMaterial
-          color={isHovered ? '#333' : color}
-          metalness={0.1}
-          roughness={0.2}
-          envMapIntensity={0.5}
-        />
-        
-        {/* Letter on front face */}
-        <mesh position={[0, 0, 0.91]}>
-          <planeGeometry args={[1.5, 1.5]} />
-          <meshStandardMaterial color="#fafafa" metalness={0} roughness={0.5} />
-        </mesh>
-        
-        {/* Letter text - simplified approach */}
-        <group position={[0, 0, 0.92]}>
-          <mesh>
-            <planeGeometry args={[1.2, 1.2]} />
-            <meshBasicMaterial transparent opacity={0}>
-              {/* We'll render the letter using HTML overlay instead */}
-            </meshBasicMaterial>
-          </mesh>
-        </group>
-      </mesh>
-      
-      {/* 3D Text for letter */}
-      <Center position={[0, 0, 0.95]}>
-        <Text3D
-          font="/fonts/helvetiker_bold.typeface.json"
-          size={0.8}
-          height={0.1}
-          curveSegments={12}
-          bevelEnabled={false}
-        >
-          {letter}
-          <meshStandardMaterial color="#111" />
-        </Text3D>
-      </Center>
-    </RigidBody>
-  );
-};
-
-// Simplified letter cube without 3D text font dependency
-const SimpleLetterCube: React.FC<LetterCubeProps> = ({ letter, position, color, index }) => {
-  const rigidBodyRef = useRef<RapierRigidBody>(null);
-  const meshRef = useRef<THREE.Group>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const { gl } = useThree();
+  const [scale, setScale] = useState(1);
 
   const handleClick = (e: any) => {
-    e.stopPropagation();
+    e.stopPropagation?.();
     
     if (rigidBodyRef.current) {
-      // Apply random impulse for fun physics
       rigidBodyRef.current.applyImpulse(
         { 
-          x: (Math.random() - 0.5) * 20, 
-          y: 15 + Math.random() * 10, 
-          z: (Math.random() - 0.5) * 20 
+          x: (Math.random() - 0.5) * 25, 
+          y: 18 + Math.random() * 8, 
+          z: (Math.random() - 0.5) * 25 
         },
         true
       );
       rigidBodyRef.current.applyTorqueImpulse(
         { 
-          x: (Math.random() - 0.5) * 8, 
-          y: (Math.random() - 0.5) * 8, 
-          z: (Math.random() - 0.5) * 8 
+          x: (Math.random() - 0.5) * 10, 
+          y: (Math.random() - 0.5) * 10, 
+          z: (Math.random() - 0.5) * 10 
         },
         true
       );
     }
   };
 
-  const handlePointerEnter = () => {
-    setIsHovered(true);
-    gl.domElement.style.cursor = 'pointer';
-  };
-
-  const handlePointerLeave = () => {
-    setIsHovered(false);
-    gl.domElement.style.cursor = 'auto';
-  };
-
   useFrame(() => {
-    if (meshRef.current) {
-      const targetScale = isHovered ? 1.15 : 1;
-      meshRef.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.15);
-    }
+    const targetScale = isHovered ? 1.12 : 1;
+    setScale(prev => prev + (targetScale - prev) * 0.15);
   });
 
   return (
     <RigidBody
       ref={rigidBodyRef}
-      position={position}
-      restitution={0.8}
-      friction={0.2}
-      linearDamping={0.3}
-      angularDamping={0.3}
+      position={initialPosition}
+      restitution={0.85}
+      friction={0.15}
+      linearDamping={0.2}
+      angularDamping={0.2}
+      colliders="cuboid"
     >
       <group
-        ref={meshRef}
+        scale={scale}
         onClick={handleClick}
-        onPointerEnter={handlePointerEnter}
-        onPointerLeave={handlePointerLeave}
+        onPointerEnter={() => setIsHovered(true)}
+        onPointerLeave={() => setIsHovered(false)}
       >
-        {/* Main cube */}
+        {/* Main cube body */}
         <mesh castShadow receiveShadow>
-          <boxGeometry args={[2, 2, 2]} />
+          <boxGeometry args={[2.2, 2.2, 2.2]} />
           <meshStandardMaterial
-            color={isHovered ? '#222' : color}
-            metalness={0.3}
-            roughness={0.15}
-            envMapIntensity={1}
+            color={isHovered ? '#1a1a1a' : color}
+            metalness={0.4}
+            roughness={0.1}
+            envMapIntensity={1.2}
           />
         </mesh>
 
-        {/* Letter faces - front */}
-        <mesh position={[0, 0, 1.01]}>
-          <planeGeometry args={[1.6, 1.6]} />
-          <meshStandardMaterial color="#fafafa" metalness={0} roughness={0.3} />
-        </mesh>
+        {/* White face panels with letter */}
+        {[
+          { pos: [0, 0, 1.11] as [number, number, number], rot: [0, 0, 0] as [number, number, number] },
+          { pos: [0, 0, -1.11] as [number, number, number], rot: [0, Math.PI, 0] as [number, number, number] },
+          { pos: [1.11, 0, 0] as [number, number, number], rot: [0, Math.PI / 2, 0] as [number, number, number] },
+          { pos: [-1.11, 0, 0] as [number, number, number], rot: [0, -Math.PI / 2, 0] as [number, number, number] },
+          { pos: [0, 1.11, 0] as [number, number, number], rot: [-Math.PI / 2, 0, 0] as [number, number, number] },
+          { pos: [0, -1.11, 0] as [number, number, number], rot: [Math.PI / 2, 0, 0] as [number, number, number] },
+        ].map((face, i) => (
+          <group key={i} position={face.pos} rotation={face.rot}>
+            <mesh>
+              <planeGeometry args={[1.8, 1.8]} />
+              <meshStandardMaterial color="#fafafa" metalness={0} roughness={0.2} />
+            </mesh>
+            <Html
+              transform
+              occlude
+              position={[0, 0, 0.01]}
+              style={{
+                fontSize: '48px',
+                fontFamily: 'Space Grotesk, sans-serif',
+                fontWeight: 'bold',
+                color: '#111',
+                userSelect: 'none',
+                pointerEvents: 'none',
+              }}
+            >
+              {letter}
+            </Html>
+          </group>
+        ))}
 
-        {/* Letter faces - back */}
-        <mesh position={[0, 0, -1.01]} rotation={[0, Math.PI, 0]}>
-          <planeGeometry args={[1.6, 1.6]} />
-          <meshStandardMaterial color="#fafafa" metalness={0} roughness={0.3} />
+        {/* Edge glow effect */}
+        <mesh>
+          <boxGeometry args={[2.25, 2.25, 2.25]} />
+          <meshBasicMaterial 
+            color={isHovered ? '#444' : '#222'} 
+            wireframe 
+            transparent 
+            opacity={0.3} 
+          />
         </mesh>
-
-        {/* Edges for depth */}
-        <lineSegments>
-          <edgesGeometry args={[new THREE.BoxGeometry(2, 2, 2)]} />
-          <lineBasicMaterial color="#000" linewidth={1} />
-        </lineSegments>
       </group>
     </RigidBody>
   );
 };
 
-const Floor: React.FC = () => {
-  return (
-    <RigidBody type="fixed" position={[0, -6, 0]}>
-      <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[50, 50]} />
-        <meshStandardMaterial 
-          color="#e8e8e8" 
-          metalness={0} 
-          roughness={0.9}
-          transparent
-          opacity={0.5}
-        />
-      </mesh>
-      
-      {/* Grid lines */}
-      <gridHelper args={[50, 50, '#ccc', '#ddd']} rotation={[0, 0, 0]} position={[0, 0.01, 0]} />
-    </RigidBody>
-  );
-};
-
-const Walls: React.FC = () => {
+const FloorAndWalls: React.FC = () => {
   return (
     <>
+      {/* Floor */}
+      <RigidBody type="fixed" position={[0, -5, 0]} colliders="cuboid">
+        <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]}>
+          <planeGeometry args={[40, 40]} />
+          <meshStandardMaterial 
+            color="#f5f5f5" 
+            metalness={0.1} 
+            roughness={0.8}
+          />
+        </mesh>
+        <CuboidCollider args={[20, 0.1, 20]} />
+      </RigidBody>
+
+      {/* Grid on floor */}
+      <gridHelper 
+        args={[40, 40, '#ddd', '#e5e5e5']} 
+        position={[0, -4.99, 0]} 
+      />
+
       {/* Invisible walls */}
-      <RigidBody type="fixed" position={[0, 0, -15]}>
-        <CuboidCollider args={[25, 20, 0.5]} />
+      <RigidBody type="fixed" position={[0, 5, -12]} colliders="cuboid">
+        <CuboidCollider args={[20, 15, 0.5]} />
       </RigidBody>
-      <RigidBody type="fixed" position={[0, 0, 15]}>
-        <CuboidCollider args={[25, 20, 0.5]} />
+      <RigidBody type="fixed" position={[0, 5, 12]} colliders="cuboid">
+        <CuboidCollider args={[20, 15, 0.5]} />
       </RigidBody>
-      <RigidBody type="fixed" position={[-15, 0, 0]}>
-        <CuboidCollider args={[0.5, 20, 25]} />
+      <RigidBody type="fixed" position={[-12, 5, 0]} colliders="cuboid">
+        <CuboidCollider args={[0.5, 15, 20]} />
       </RigidBody>
-      <RigidBody type="fixed" position={[15, 0, 0]}>
-        <CuboidCollider args={[0.5, 20, 25]} />
+      <RigidBody type="fixed" position={[12, 5, 0]} colliders="cuboid">
+        <CuboidCollider args={[0.5, 15, 20]} />
       </RigidBody>
     </>
   );
 };
 
-const Scene: React.FC = () => {
-  const letters = [
-    { letter: 'J', position: [-2.5, 5, 0] as [number, number, number], color: '#1a1a1a' },
-    { letter: 'S', position: [2.5, 6, 0] as [number, number, number], color: '#2a2a2a' },
-    { letter: 'C', position: [-2.5, 10, 1] as [number, number, number], color: '#3a3a3a' },
-    { letter: 'L', position: [2.5, 8, -1] as [number, number, number], color: '#4a4a4a' },
-  ];
-
+const FloatingDecorations: React.FC = () => {
   return (
     <>
-      <PerspectiveCamera makeDefault position={[0, 5, 18]} fov={50} />
-      <OrbitControls 
-        enablePan={false} 
-        minDistance={8} 
-        maxDistance={30}
-        minPolarAngle={0.3}
-        maxPolarAngle={Math.PI / 2 - 0.1}
-        target={[0, 0, 0]}
-      />
-      
-      {/* Lighting */}
-      <ambientLight intensity={0.6} />
-      <directionalLight
-        position={[10, 20, 10]}
-        intensity={1.5}
-        castShadow
-        shadow-mapSize={[2048, 2048]}
-        shadow-camera-far={50}
-        shadow-camera-left={-20}
-        shadow-camera-right={20}
-        shadow-camera-top={20}
-        shadow-camera-bottom={-20}
-      />
-      <pointLight position={[-10, 10, -10]} intensity={0.5} color="#fff" />
-      
-      <Environment preset="city" />
-      
-      <Physics gravity={[0, -15, 0]}>
-        <Floor />
-        <Walls />
-        
-        {letters.map((item, index) => (
-          <SimpleLetterCube
-            key={item.letter}
-            letter={item.letter}
-            position={item.position}
-            color={item.color}
-            index={index}
-          />
-        ))}
-      </Physics>
-      
-      {/* Decorative floating elements */}
       <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-        <mesh position={[8, 8, -5]}>
-          <octahedronGeometry args={[0.5]} />
-          <meshStandardMaterial color="#ddd" wireframe />
-        </mesh>
-      </Float>
-      
-      <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.8}>
-        <mesh position={[-8, 6, -3]}>
-          <icosahedronGeometry args={[0.4]} />
+        <mesh position={[7, 7, -4]}>
+          <octahedronGeometry args={[0.4]} />
           <meshStandardMaterial color="#ccc" wireframe />
         </mesh>
       </Float>
       
-      <Float speed={2.5} rotationIntensity={0.4} floatIntensity={0.6}>
-        <mesh position={[6, 10, 3]}>
-          <tetrahedronGeometry args={[0.6]} />
+      <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.8}>
+        <mesh position={[-7, 5, -2]}>
+          <icosahedronGeometry args={[0.35]} />
           <meshStandardMaterial color="#bbb" wireframe />
         </mesh>
       </Float>
+      
+      <Float speed={2.5} rotationIntensity={0.4} floatIntensity={0.6}>
+        <mesh position={[5, 9, 2]}>
+          <tetrahedronGeometry args={[0.5]} />
+          <meshStandardMaterial color="#aaa" wireframe />
+        </mesh>
+      </Float>
+
+      <Float speed={1.8} rotationIntensity={0.6} floatIntensity={0.4}>
+        <mesh position={[-5, 8, 3]}>
+          <dodecahedronGeometry args={[0.3]} />
+          <meshStandardMaterial color="#999" wireframe />
+        </mesh>
+      </Float>
+    </>
+  );
+};
+
+const Scene: React.FC = () => {
+  const cubes = [
+    { letter: 'J', position: [-2.5, 8, 0] as [number, number, number], color: '#1a1a1a' },
+    { letter: 'S', position: [2.5, 10, 0] as [number, number, number], color: '#2a2a2a' },
+    { letter: 'C', position: [-2.5, 14, 1] as [number, number, number], color: '#3a3a3a' },
+    { letter: 'L', position: [2.5, 12, -1] as [number, number, number], color: '#4a4a4a' },
+  ];
+
+  return (
+    <>
+      <PerspectiveCamera makeDefault position={[0, 6, 16]} fov={50} />
+      <OrbitControls 
+        enablePan={false} 
+        minDistance={10} 
+        maxDistance={25}
+        minPolarAngle={0.4}
+        maxPolarAngle={Math.PI / 2 - 0.1}
+        target={[0, 2, 0]}
+        enableDamping
+        dampingFactor={0.05}
+      />
+      
+      {/* Lighting */}
+      <ambientLight intensity={0.5} />
+      <directionalLight
+        position={[8, 15, 8]}
+        intensity={1.8}
+        castShadow
+        shadow-mapSize={[2048, 2048]}
+        shadow-camera-far={40}
+        shadow-camera-left={-15}
+        shadow-camera-right={15}
+        shadow-camera-top={15}
+        shadow-camera-bottom={-15}
+      />
+      <pointLight position={[-8, 8, -8]} intensity={0.4} color="#fff" />
+      <hemisphereLight args={['#fafafa', '#e0e0e0', 0.4]} />
+      
+      <Environment preset="city" />
+      
+      <Physics gravity={[0, -18, 0]} debug={false}>
+        <FloorAndWalls />
+        
+        {cubes.map((cube) => (
+          <LetterCube
+            key={cube.letter}
+            letter={cube.letter}
+            initialPosition={cube.position}
+            color={cube.color}
+          />
+        ))}
+      </Physics>
+      
+      <FloatingDecorations />
     </>
   );
 };
@@ -350,24 +262,23 @@ const Logo3DPlayground: React.FC = () => {
   return (
     <div className="relative w-full h-full bg-gradient-to-b from-[#fafafa] to-[#f0f0f0]">
       {/* Loading overlay */}
-      {isLoading && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ opacity: isLoading ? 1 : 0 }}
-          className="absolute inset-0 z-20 bg-[#fafafa] flex items-center justify-center"
-        >
-          <div className="font-mono text-sm text-gray-500 animate-pulse">
-            INITIALIZING_3D_ENGINE...
-          </div>
-        </motion.div>
-      )}
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={{ opacity: isLoading ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
+        className={`absolute inset-0 z-20 bg-[#fafafa] flex items-center justify-center pointer-events-none ${!isLoading ? 'hidden' : ''}`}
+      >
+        <div className="font-mono text-sm text-gray-500 animate-pulse">
+          LOADING_3D_ENGINE...
+        </div>
+      </motion.div>
 
       {/* 3D Canvas */}
       <Canvas
         shadows
-        onCreated={() => setTimeout(() => setIsLoading(false), 500)}
+        onCreated={() => setTimeout(() => setIsLoading(false), 800)}
         gl={{ antialias: true, alpha: true }}
-        style={{ background: 'transparent' }}
+        style={{ background: 'transparent', cursor: 'grab' }}
       >
         <Suspense fallback={null}>
           <Scene />
@@ -378,27 +289,26 @@ const Logo3DPlayground: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: isLoading ? 0 : 1, y: isLoading ? 20 : 0 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm border border-gray-200 px-6 py-3 font-mono text-xs text-gray-600 shadow-lg"
+        transition={{ delay: 0.8, duration: 0.5 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm border border-gray-200 px-6 py-3 font-mono text-xs text-gray-600 shadow-lg pointer-events-none"
       >
         <span className="text-gray-400 mr-2">//</span>
-        CLICK cubes to launch
+        <span className="font-semibold text-black">CLICK</span> cubes to launch
         <span className="mx-3 text-gray-300">|</span>
-        DRAG to orbit
+        <span className="font-semibold text-black">DRAG</span> to orbit
         <span className="mx-3 text-gray-300">|</span>
-        SCROLL to zoom
+        <span className="font-semibold text-black">SCROLL</span> to zoom
       </motion.div>
 
-      {/* Stats */}
+      {/* Tech badge */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: isLoading ? 0 : 1 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
-        className="absolute top-4 right-4 font-mono text-[10px] text-gray-400 text-right"
+        transition={{ delay: 1, duration: 0.5 }}
+        className="absolute top-4 right-4 font-mono text-[10px] text-gray-400 text-right pointer-events-none"
       >
         <div className="text-black font-semibold">LOGO_PHYSICS</div>
-        <div>WEBGL_RENDERER</div>
-        <div>RAPIER_ENGINE</div>
+        <div>THREE.JS + RAPIER</div>
       </motion.div>
     </div>
   );
