@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MagneticButton from './MagneticButton';
-
+import ContactSuccessAnimation from './ContactSuccessAnimation';
 const Contact: React.FC = () => {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
     message: ''
   });
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'animating'>('idle');
   const [copied, setCopied] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,9 +33,8 @@ const Contact: React.FC = () => {
       const data = await response.json();
 
       if (data.success) {
-        setStatus('success');
+        setStatus('animating');
         setFormState({ name: '', email: '', message: '' });
-        setTimeout(() => setStatus('idle'), 3000);
       } else {
         throw new Error('Submission failed');
       }
@@ -139,14 +138,20 @@ const Contact: React.FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="bg-white p-8 md:p-10 border border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative"
+            className="bg-white p-8 md:p-10 border border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
           >
+            {/* Success Animation Overlay */}
+            <AnimatePresence>
+              {status === 'animating' && (
+                <ContactSuccessAnimation onComplete={() => setStatus('idle')} />
+              )}
+            </AnimatePresence>
+
             {/* Decorative Corner Markers */}
             <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-black"></div>
             <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-black"></div>
             <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-black"></div>
             <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-black"></div>
-
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="space-y-1">
                 <label htmlFor="name" className="block text-xs font-mono font-bold uppercase text-gray-500">
