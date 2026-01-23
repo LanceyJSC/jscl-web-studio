@@ -346,7 +346,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           >
             ◉
           </motion.span>
-          <span>Tap to spin</span>
+          <span>Tap logo</span>
         </motion.div>
       )}
     </div>
