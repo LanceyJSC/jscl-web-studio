@@ -1,64 +1,87 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '@/data/projects';
+
 const Projects: React.FC = () => {
-  return <section id="projects" className="py-16 md:py-24 relative">
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  // Parallax for header and decorative elements
+  const headerY = useTransform(scrollYProgress, [0, 1], [80, -40]);
+  const decorY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+
+  return (
+    <section 
+      ref={containerRef}
+      id="projects" 
+      className="py-16 md:py-24 relative overflow-hidden"
+    >
+      {/* Parallax Decorative Elements */}
+      <motion.div 
+        style={{ y: decorY }}
+        className="absolute top-32 left-5 w-20 h-20 border border-black/5 rotate-12 pointer-events-none"
+      />
+      <motion.div 
+        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -80]) }}
+        className="absolute bottom-20 right-10 w-32 h-32 border border-black/5 -rotate-45 pointer-events-none"
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-end justify-between mb-8 md:mb-16">
-          <motion.h2 initial={{
-          opacity: 0,
-          x: -50
-        }} whileInView={{
-          opacity: 1,
-          x: 0
-        }} viewport={{
-          once: false,
-          margin: "-10%"
-        }} transition={{
-          duration: 0.8
-        }} className="text-2xl sm:text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter">
+        <motion.div 
+          style={{ y: headerY }}
+          className="flex items-end justify-between mb-8 md:mb-16"
+        >
+          <motion.h2 
+            initial={{ opacity: 0, x: -50 }} 
+            whileInView={{ opacity: 1, x: 0 }} 
+            viewport={{ once: false, margin: "-10%" }} 
+            transition={{ duration: 0.8 }} 
+            className="text-2xl sm:text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter"
+          >
             Selected <span className="text-gray-400 font-light">Works</span>
           </motion.h2>
-          <motion.span initial={{
-          opacity: 0
-        }} whileInView={{
-          opacity: 1
-        }} viewport={{
-          once: false,
-          margin: "-10%"
-        }} transition={{
-          delay: 0.5,
-          duration: 0.5
-        }} className="hidden md:block text-[10px] font-mono tracking-widest text-gray-500 mb-1">
+          <motion.span 
+            initial={{ opacity: 0 }} 
+            whileInView={{ opacity: 1 }} 
+            viewport={{ once: false, margin: "-10%" }} 
+            transition={{ delay: 0.5, duration: 0.5 }} 
+            className="hidden md:block text-[10px] font-mono tracking-widest text-gray-500 mb-1"
+          >
             ( {projects.length} ) PROJECTS
           </motion.span>
-        </div>
+        </motion.div>
 
         {/* List Container */}
         <div className="flex flex-col">
-          {projects.map((project, index) => <ProjectItem key={project.id} project={project} index={index} />)}
+          {projects.map((project, index) => (
+            <ProjectItem key={project.id} project={project} index={index} />
+          ))}
           {/* Closing Line */}
-          <motion.div initial={{
-          scaleX: 0
-        }} whileInView={{
-          scaleX: 1
-        }} viewport={{
-          once: false,
-          margin: "-50px"
-        }} transition={{
-          duration: 0.8,
-          ease: "circOut"
-        }} className="border-t border-gray-200 origin-left"></motion.div>
+          <motion.div 
+            initial={{ scaleX: 0 }} 
+            whileInView={{ scaleX: 1 }} 
+            viewport={{ once: false, margin: "-50px" }} 
+            transition={{ duration: 0.8, ease: "circOut" }} 
+            className="border-t border-gray-200 origin-left"
+          />
         </div>
 
         <div className="mt-12 md:mt-20 text-center">
-            <Link to="/#projects" className="inline-block px-6 md:px-10 py-3 md:py-4 border border-black text-[10px] md:text-xs font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">
-                View All Projects
-            </Link>
+          <Link 
+            to="/#projects" 
+            className="inline-block px-6 md:px-10 py-3 md:py-4 border border-black text-[10px] md:text-xs font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300"
+          >
+            View All Projects
+          </Link>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
 interface ProjectItemProps {
   project: typeof projects[0];
