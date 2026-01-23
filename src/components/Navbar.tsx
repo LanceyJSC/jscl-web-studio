@@ -27,12 +27,9 @@ const Navbar: React.FC = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <a href="#" className="group flex items-center gap-2">
+        <a href="#" className="group flex items-center">
           {/* Small version of logo for Navbar - Static (No hover scale) */}
           <Logo size="sm" animated={false} />
-          <span className={`font-sans font-bold tracking-tight text-lg transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-0'}`}>
-            JSCL
-          </span>
         </a>
 
         <div className="hidden md:flex items-center space-x-12">
