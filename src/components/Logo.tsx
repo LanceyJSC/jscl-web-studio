@@ -69,6 +69,13 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     calibrationRef.current = null;
   };
 
+  // Haptic feedback function
+  const triggerHaptic = () => {
+    if (isMobile && navigator.vibrate) {
+      navigator.vibrate(50); // Short 50ms vibration
+    }
+  };
+
   // 5. Request gyroscope permission on first tap (iOS requires user gesture)
   const requestGyroPermission = async () => {
     if (gyroEnabled) return;
@@ -197,6 +204,9 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           transformStyle: "preserve-3d", 
         }}
         onClick={() => {
+          // Trigger haptic feedback on mobile
+          triggerHaptic();
+          
           // Request gyro permission on first tap (iOS requirement)
           if (isMobile && !gyroEnabled) {
             requestGyroPermission();
@@ -319,6 +329,24 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           <span className={`block font-sans tracking-[0.4em] text-black font-medium uppercase ${subtitleClasses[size]}`}>
             Web Designer
           </span>
+        </motion.div>
+      )}
+      
+      {/* Mobile tap indicator */}
+      {isMobile && animated && (size === 'lg' || size === 'xl' || size === '2xl') && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: duration * 7, duration: 0.5 }}
+          className="mt-4 flex items-center gap-2 text-[10px] font-mono tracking-widest text-gray-400 uppercase"
+        >
+          <motion.span
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          >
+            ◉
+          </motion.span>
+          <span>Tap to spin</span>
         </motion.div>
       )}
     </div>
