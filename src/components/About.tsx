@@ -13,9 +13,9 @@ const About: React.FC = () => {
         {/* Grid setup: Default alignment stretches columns, enabling sticky behavior */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16">
           
-          <div className="relative pb-16 lg:pb-0">
+          <div className="relative pb-6 lg:pb-0">
              <div className="lg:sticky lg:top-32">
-                <div className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-none mb-8 md:mb-8 opacity-90 text-black">
+                <div className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-none mb-4 md:mb-8 opacity-90 text-black">
                   <TextReveal delay={0.1}>DIGITAL</TextReveal>
                   <br />
                   <TextReveal delay={0.3}>CRAFTSMAN</TextReveal>
@@ -33,7 +33,7 @@ const About: React.FC = () => {
              </div>
           </div>
 
-          <div className="space-y-12 md:space-y-24">
+          <div className="space-y-8 md:space-y-24">
              {/* Philosophy Block */}
              <motion.div
                initial={{ opacity: 0, x: 50 }}
