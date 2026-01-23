@@ -50,9 +50,12 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   const handleClick = () => {
     if (!isSpinning) {
       setIsSpinning(true);
-      setTimeout(() => setIsSpinning(false), 600);
+      setTimeout(() => setIsSpinning(false), 2000);
     }
   };
+
+  // Spin animation spring
+  const spinY = useSpring(0, { damping: 20, stiffness: 80, mass: 2 });
 
   // Dimensions & Styles
   const sizeClasses = {
@@ -104,13 +107,20 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
         className={`relative grid grid-cols-2 grid-rows-2 ${sizeClasses[size]} bg-transparent cursor-pointer`}
         style={{
           rotateX,
-          rotateY,
+          rotateY: useTransform([springX, spinY], ([sx, sy]) => {
+            const hoverRotate = (sx as number - 0.5) * 50;
+            return hoverRotate + (sy as number);
+          }),
           skewX,
           transformStyle: "preserve-3d", 
         }}
-        onClick={handleClick}
-        animate={{ rotateZ: isSpinning ? 360 : 0 }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        onClick={() => {
+          if (!isSpinning) {
+            setIsSpinning(true);
+            spinY.set(spinY.get() + 720);
+            setTimeout(() => setIsSpinning(false), 2000);
+          }
+        }}
       >
         {/* --- Outer Frame Construction (Clockwise Drawing) --- */}
         
