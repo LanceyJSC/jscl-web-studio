@@ -110,7 +110,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
                 </div>
 
                 {/* Middle Section: Image or Fallback */}
-                <div className="md:w-5/12 h-48 md:h-40 overflow-hidden relative transition-all duration-700 bg-gray-100 group-hover:bg-gray-200">
+                <div className="md:w-5/12 h-48 md:h-44 overflow-hidden relative transition-all duration-700 bg-gray-100 group-hover:bg-gray-200">
                     {hasError ? <div className="w-full h-full flex flex-col items-center justify-center border border-gray-200 bg-gray-50 p-4 text-center">
                             <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-red-400 mb-1">
                                 Img Error
