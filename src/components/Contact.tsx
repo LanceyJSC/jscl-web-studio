@@ -11,20 +11,38 @@ const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const [copied, setCopied] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formState.name || !formState.email) return;
+    if (!formState.name || !formState.email || !formState.message) return;
 
     setStatus('submitting');
-    
-    // Simulate API call
-    setTimeout(() => {
-      setStatus('success');
-      setFormState({ name: '', email: '', message: '' });
-      
-      // Reset status after a few seconds
-      setTimeout(() => setStatus('idle'), 3000);
-    }, 1500);
+
+    try {
+      const formData = new FormData();
+      formData.append("access_key", "3c0eff7c-ab02-4b29-aa31-9d57590a5b06");
+      formData.append("name", formState.name);
+      formData.append("email", formState.email);
+      formData.append("message", formState.message);
+      formData.append("subject", `Portfolio Contact from ${formState.name}`);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus('success');
+        setFormState({ name: '', email: '', message: '' });
+        setTimeout(() => setStatus('idle'), 3000);
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setStatus('idle');
+    }
   };
 
   const copyEmail = () => {
