@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import GenerativeCanvas from '@/components/GenerativeCanvas';
+import Logo3DPlayground from '@/components/Logo3DPlayground';
 import Noise from '@/components/Noise';
 
 const Lab: React.FC = () => {
@@ -26,15 +26,15 @@ const Lab: React.FC = () => {
 
         <div className="font-display text-lg md:text-xl font-bold tracking-tight">
           <span className="text-gray-400 font-mono text-xs mr-2">//</span>
-          CREATIVE LAB
+          3D PLAYGROUND
         </div>
 
         <div className="font-mono text-xs text-gray-400">
-          v2.0
+          v3.0
         </div>
       </motion.header>
 
-      {/* Canvas Container - Full remaining height */}
+      {/* 3D Canvas Container - Full remaining height */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -47,7 +47,7 @@ const Lab: React.FC = () => {
         <div className="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-black z-10 pointer-events-none" />
         <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-black z-10 pointer-events-none" />
 
-        <GenerativeCanvas />
+        <Logo3DPlayground />
       </motion.div>
 
       {/* Footer */}
@@ -58,11 +58,11 @@ const Lab: React.FC = () => {
         className="relative z-10 px-6 py-3 text-center font-mono text-[10px] text-gray-400 border-t border-gray-100 bg-white/80 backdrop-blur-sm"
       >
         <div className="flex justify-center items-center gap-4 flex-wrap">
-          <span>SYMMETRY_DRAWING</span>
+          <span>THREE.JS</span>
           <span className="hidden md:inline">|</span>
-          <span>GENERATIVE_PATTERNS</span>
+          <span>RAPIER_PHYSICS</span>
           <span className="hidden md:inline">|</span>
-          <span>EXPORT_PNG</span>
+          <span>REACT_THREE_FIBER</span>
         </div>
       </motion.footer>
     </div>
