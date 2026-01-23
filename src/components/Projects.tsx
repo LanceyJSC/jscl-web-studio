@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '@/data/projects';
 const Projects: React.FC = () => {
-  return <section id="projects" className="py-24 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-end justify-between mb-16">
+  return <section id="projects" className="py-16 md:py-24 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-end justify-between mb-8 md:mb-16">
           <motion.h2 initial={{
           opacity: 0,
           x: -50
@@ -17,7 +17,7 @@ const Projects: React.FC = () => {
           margin: "-10%"
         }} transition={{
           duration: 0.8
-        }} className="text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter">
+        }} className="text-2xl sm:text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter">
             Selected <span className="text-gray-400 font-light">Works</span>
           </motion.h2>
           <motion.span initial={{
@@ -52,8 +52,8 @@ const Projects: React.FC = () => {
         }} className="border-t border-gray-200 origin-left"></motion.div>
         </div>
 
-        <div className="mt-20 text-center">
-            <Link to="/#projects" className="inline-block px-10 py-4 border border-black text-xs font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">
+        <div className="mt-12 md:mt-20 text-center">
+            <Link to="/#projects" className="inline-block px-6 md:px-10 py-3 md:py-4 border border-black text-[10px] md:text-xs font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">
                 View All Projects
             </Link>
         </div>
@@ -90,27 +90,27 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
     duration: 0.5,
     delay: index * 0.1
   }}>
-            <Link to={`/project/${project.slug}`} className="group relative border-t border-gray-200 py-12 flex flex-col md:flex-row gap-8 md:items-center justify-between transition-all duration-500 hover:bg-gray-50 block">
+            <Link to={`/project/${project.slug}`} className="group relative border-t border-gray-200 py-6 md:py-12 flex flex-col md:flex-row gap-4 md:gap-8 md:items-center justify-between transition-all duration-500 hover:bg-gray-50 block px-2 md:px-0">
                 {/* Left Section: Index + Title */}
-                <div className="flex items-start md:items-center gap-8 md:w-5/12">
+                <div className="flex items-start md:items-center gap-4 md:gap-8 md:w-5/12">
                     {/* Index */}
-                    <span className="text-xs font-mono text-gray-300 group-hover:text-black transition-colors shrink-0 pt-2 md:pt-0">
+                    <span className="text-[10px] md:text-xs font-mono text-gray-300 group-hover:text-black transition-colors shrink-0 pt-1 md:pt-0">
                         0{index + 1}
                     </span>
 
                     {/* Title & Category */}
                     <div>
-                        <h3 className="text-3xl font-display font-light group-hover:translate-x-2 transition-transform duration-500">
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-display font-light group-hover:translate-x-2 transition-transform duration-500">
                             {project.title}
                         </h3>
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 mt-2 block group-hover:translate-x-2 transition-transform duration-500 delay-75">
+                        <span className="text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 mt-1 md:mt-2 block group-hover:translate-x-2 transition-transform duration-500 delay-75">
                             {project.category}
                         </span>
                     </div>
                 </div>
 
                 {/* Middle Section: Image or Fallback */}
-                <div className="md:w-5/12 h-48 md:h-44 overflow-hidden relative transition-all duration-700 bg-gray-100 group-hover:bg-gray-200">
+                <div className="w-full md:w-5/12 h-40 sm:h-48 md:h-44 overflow-hidden relative transition-all duration-700 bg-gray-100 group-hover:bg-gray-200">
                     {hasError ? <div className="w-full h-full flex flex-col items-center justify-center border border-gray-200 bg-gray-50 p-4 text-center">
                             <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-red-400 mb-1">
                                 Img Error
@@ -125,13 +125,13 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
                 </div>
 
                 {/* Right Section: Meta & Action */}
-                <div className="flex items-center justify-between md:justify-end gap-8 md:w-2/12">
-                     <span className="text-xs text-gray-400 group-hover:text-black transition-colors text-center font-serif">
+                <div className="flex items-center justify-between md:justify-end gap-4 md:gap-8 md:w-2/12">
+                     <span className="text-[10px] md:text-xs text-gray-400 group-hover:text-black transition-colors text-center font-serif">
                         {project.year}
                      </span>
                      
-                     <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:border-black transition-all duration-300">
-                        <svg className="w-3 h-3 text-black group-hover:text-white transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-black group-hover:border-black transition-all duration-300">
+                        <svg className="w-2.5 h-2.5 md:w-3 md:h-3 text-black group-hover:text-white transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                      </div>

@@ -51,10 +51,10 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-32 relative bg-transparent">
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+    <section id="contact" className="py-16 md:py-32 relative bg-transparent">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
           
           {/* Left Column: Heading & Info */}
           <div className="flex flex-col justify-between">
@@ -72,7 +72,7 @@ const Contact: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-5xl md:text-7xl font-display font-bold leading-none mb-8 tracking-tighter"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-bold leading-tight md:leading-none mb-6 md:mb-8 tracking-tighter"
               >
                 Let's build <br/>
                 <span className="text-gray-400">something iconic.</span>
@@ -83,7 +83,7 @@ const Contact: React.FC = () => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="text-lg text-gray-600 font-light max-w-md leading-relaxed mb-12"
+                className="text-base md:text-lg text-gray-600 font-light max-w-md leading-relaxed mb-8 md:mb-12"
               >
                 I am currently open for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you.
               </motion.p>
@@ -99,7 +99,7 @@ const Contact: React.FC = () => {
               <span className="text-xs font-mono text-gray-400 block mb-2">DIRECT LINE</span>
               <button 
                 onClick={copyEmail}
-                className="relative text-2xl md:text-3xl font-display font-medium hover:text-gray-600 transition-colors text-left w-full flex items-center gap-4"
+                className="relative text-lg sm:text-xl md:text-2xl lg:text-3xl font-display font-medium hover:text-gray-600 transition-colors text-left w-full flex items-center gap-2 md:gap-4 flex-wrap"
               >
                 jsclancey@gmail.com
                 <AnimatePresence mode="wait">
@@ -138,7 +138,7 @@ const Contact: React.FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="bg-white p-8 md:p-10 border border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
+            className="bg-white p-5 sm:p-8 md:p-10 border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
           >
             {/* Success Animation Overlay */}
             <AnimatePresence>

@@ -23,10 +23,10 @@ const Navbar: React.FC = () => {
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md py-3 shadow-sm' : 'bg-transparent py-6'
+        isScrolled ? 'bg-white/80 backdrop-blur-md py-2 md:py-3 shadow-sm' : 'bg-transparent py-4 md:py-6'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
         <a href="#" className="group flex items-center">
           {/* Small version of logo for Navbar - Static (No hover scale) */}
           <Logo size="sm" animated={false} />
@@ -62,12 +62,12 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-100 p-6 flex flex-col space-y-4 shadow-xl animate-fade-in">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-100 p-4 sm:p-6 flex flex-col space-y-3 sm:space-y-4 shadow-xl animate-fade-in">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-lg font-mono font-normal tracking-widest text-center text-gray-800 hover:text-black uppercase"
+              className="text-base sm:text-lg font-mono font-normal tracking-widest text-center text-gray-800 hover:text-black uppercase py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               {link.name}
