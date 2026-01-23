@@ -13,8 +13,8 @@ const About: React.FC = () => {
         {/* Grid setup: Default alignment stretches columns, enabling sticky behavior */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16">
           
-          <div className="relative">
-             <motion.div style={{ y: y1 }} className="lg:sticky lg:top-32">
+          <div className="relative pb-16 lg:pb-0">
+             <div className="lg:sticky lg:top-32">
                 <div className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-none mb-8 md:mb-8 opacity-90 text-black">
                   <TextReveal delay={0.1}>DIGITAL</TextReveal>
                   <br />
@@ -26,11 +26,11 @@ const About: React.FC = () => {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true, margin: "-10%" }}
                   transition={{ delay: 0.5, duration: 0.8 }}
-                  className="text-lg md:text-xl text-gray-600 font-light max-w-md leading-relaxed relative z-10"
+                  className="text-lg md:text-xl text-gray-600 font-light max-w-md leading-relaxed"
                 >
                   I build digital products that are clean, efficient, and future-proof.
                 </motion.p>
-             </motion.div>
+             </div>
           </div>
 
           <div className="space-y-12 md:space-y-24">

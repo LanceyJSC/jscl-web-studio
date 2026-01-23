@@ -36,7 +36,9 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   const skewX = useTransform(springX, [0, 1], [-2, 2]);
 
   // 4. Gyroscope handler - calibrates to initial phone position
-  const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
+  const handleDeviceOrientationRef = useRef<(event: DeviceOrientationEvent) => void>();
+  
+  handleDeviceOrientationRef.current = (event: DeviceOrientationEvent) => {
     const beta = event.beta ?? 0;
     const gamma = event.gamma ?? 0;
     
@@ -57,9 +59,19 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     y.set(normalizedY);
   };
 
+  // Stable event handler wrapper
+  const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
+    handleDeviceOrientationRef.current?.(event);
+  };
+
+  // Recalibrate function - resets baseline to current phone angle
+  const recalibrate = () => {
+    calibrationRef.current = null;
+  };
+
   // 5. Request gyroscope permission on first tap (iOS requires user gesture)
   const requestGyroPermission = async () => {
-    if (gyroEnabled || !isMobile) return;
+    if (gyroEnabled) return;
     
     if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
       try {
@@ -78,9 +90,12 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     }
   };
 
-  // Auto-enable gyroscope for Android/non-iOS devices on mount
+  // Auto-enable gyroscope for all mobile devices on mount
   useEffect(() => {
-    if (!animated || !isMobile || isIOS) return;
+    if (!animated || !isMobile) return;
+    
+    // iOS requires permission request via user gesture
+    if (isIOS) return;
     
     // Non-iOS devices can enable gyro immediately without permission
     if (window.DeviceOrientationEvent && !gyroEnabled) {
@@ -91,7 +106,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     return () => {
       window.removeEventListener('deviceorientation', handleDeviceOrientation);
     };
-  }, [animated, isMobile, isIOS, gyroEnabled]);
+  }, [animated, isMobile, isIOS]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     // Disable mouse interaction on mobile (use gyroscope instead)
@@ -185,6 +200,11 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           // Request gyro permission on first tap (iOS requirement)
           if (isMobile && !gyroEnabled) {
             requestGyroPermission();
+          }
+          
+          // Recalibrate gyro to current phone angle on each tap
+          if (isMobile && gyroEnabled) {
+            recalibrate();
           }
           
           if (!isSpinning) {
