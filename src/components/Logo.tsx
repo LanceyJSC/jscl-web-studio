@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
@@ -11,8 +12,9 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, animated = true }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const isMobile = useIsMobile();
 
-  // 1. Mouse Tracking (0 to 1)
+  // 1. Mouse/Gyroscope Tracking (0 to 1)
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
 
@@ -26,9 +28,52 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   const rotateY = useTransform(springX, [0, 1], [-25, 25]); 
   const skewX = useTransform(springX, [0, 1], [-2, 2]);
 
+  // 4. Gyroscope for mobile devices
+  useEffect(() => {
+    if (!animated || !isMobile) return;
+
+    const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
+      // Beta: front-to-back tilt (-180 to 180), Gamma: left-to-right tilt (-90 to 90)
+      const beta = event.beta ?? 0;
+      const gamma = event.gamma ?? 0;
+      
+      // Normalize to 0-1 range (centered at 0.5)
+      // Beta (tilt forward/back): map -45 to 45 degrees to 0-1
+      const normalizedY = Math.max(0, Math.min(1, (beta + 45) / 90));
+      // Gamma (tilt left/right): map -45 to 45 degrees to 0-1
+      const normalizedX = Math.max(0, Math.min(1, (gamma + 45) / 90));
+      
+      x.set(normalizedX);
+      y.set(normalizedY);
+    };
+
+    // Request permission for iOS 13+
+    const requestPermission = async () => {
+      if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+        try {
+          const permission = await (DeviceOrientationEvent as any).requestPermission();
+          if (permission === 'granted') {
+            window.addEventListener('deviceorientation', handleDeviceOrientation);
+          }
+        } catch (error) {
+          console.log('Gyroscope permission denied');
+        }
+      } else {
+        // Non-iOS or older devices
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
+      }
+    };
+
+    requestPermission();
+
+    return () => {
+      window.removeEventListener('deviceorientation', handleDeviceOrientation);
+    };
+  }, [animated, isMobile, x, y]);
+
   const handleMouseMove = (e: React.MouseEvent) => {
-    // Disable interaction if animated is false
-    if (!animated) return;
+    // Disable mouse interaction on mobile (use gyroscope instead)
+    if (!animated || isMobile) return;
 
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -42,7 +87,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   };
 
   const handleMouseLeave = () => {
-    if (!animated) return;
+    if (!animated || isMobile) return;
     x.set(0.5);
     y.set(0.5);
   };
