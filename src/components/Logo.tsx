@@ -12,6 +12,7 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, animated = true }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [gyroEnabled, setGyroEnabled] = useState(false);
   const isMobile = useIsMobile();
 
   // 1. Mouse/Gyroscope Tracking (0 to 1)
@@ -28,48 +29,48 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   const rotateY = useTransform(springX, [0, 1], [-25, 25]); 
   const skewX = useTransform(springX, [0, 1], [-2, 2]);
 
-  // 4. Gyroscope for mobile devices
-  useEffect(() => {
-    if (!animated || !isMobile) return;
+  // 4. Gyroscope handler
+  const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
+    const beta = event.beta ?? 0;
+    const gamma = event.gamma ?? 0;
+    
+    // Normalize to 0-1 range (centered at 0.5)
+    const normalizedY = Math.max(0, Math.min(1, (beta + 45) / 90));
+    const normalizedX = Math.max(0, Math.min(1, (gamma + 45) / 90));
+    
+    x.set(normalizedX);
+    y.set(normalizedY);
+  };
 
-    const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
-      // Beta: front-to-back tilt (-180 to 180), Gamma: left-to-right tilt (-90 to 90)
-      const beta = event.beta ?? 0;
-      const gamma = event.gamma ?? 0;
-      
-      // Normalize to 0-1 range (centered at 0.5)
-      // Beta (tilt forward/back): map -45 to 45 degrees to 0-1
-      const normalizedY = Math.max(0, Math.min(1, (beta + 45) / 90));
-      // Gamma (tilt left/right): map -45 to 45 degrees to 0-1
-      const normalizedX = Math.max(0, Math.min(1, (gamma + 45) / 90));
-      
-      x.set(normalizedX);
-      y.set(normalizedY);
-    };
-
-    // Request permission for iOS 13+
-    const requestPermission = async () => {
-      if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
-        try {
-          const permission = await (DeviceOrientationEvent as any).requestPermission();
-          if (permission === 'granted') {
-            window.addEventListener('deviceorientation', handleDeviceOrientation);
-          }
-        } catch (error) {
-          console.log('Gyroscope permission denied');
+  // 5. Request gyroscope permission on first tap (iOS requires user gesture)
+  const requestGyroPermission = async () => {
+    if (gyroEnabled || !isMobile) return;
+    
+    if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
+      try {
+        const permission = await (DeviceOrientationEvent as any).requestPermission();
+        if (permission === 'granted') {
+          setGyroEnabled(true);
+          window.addEventListener('deviceorientation', handleDeviceOrientation);
         }
-      } else {
-        // Non-iOS or older devices
-        window.addEventListener('deviceorientation', handleDeviceOrientation);
+      } catch (error) {
+        console.log('Gyroscope permission denied');
+      }
+    } else {
+      // Non-iOS devices - enable directly
+      setGyroEnabled(true);
+      window.addEventListener('deviceorientation', handleDeviceOrientation);
+    }
+  };
+
+  // Cleanup gyroscope listener
+  useEffect(() => {
+    return () => {
+      if (gyroEnabled) {
+        window.removeEventListener('deviceorientation', handleDeviceOrientation);
       }
     };
-
-    requestPermission();
-
-    return () => {
-      window.removeEventListener('deviceorientation', handleDeviceOrientation);
-    };
-  }, [animated, isMobile, x, y]);
+  }, [gyroEnabled]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     // Disable mouse interaction on mobile (use gyroscope instead)
@@ -160,10 +161,18 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           transformStyle: "preserve-3d", 
         }}
         onClick={() => {
+          // Request gyro permission on first tap (iOS requirement)
+          if (isMobile && !gyroEnabled) {
+            requestGyroPermission();
+          }
+          
           if (!isSpinning) {
             setIsSpinning(true);
             spinY.set(spinY.get() + 720);
-            setTimeout(() => setIsSpinning(false), 2000);
+            setTimeout(() => {
+              setIsSpinning(false);
+              spinY.jump(0); // Reset to default position instantly
+            }, 2000);
           }
         }}
       >
