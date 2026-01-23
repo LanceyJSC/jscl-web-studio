@@ -15,7 +15,7 @@ const About: React.FC = () => {
           
           <div className="relative">
              <motion.div style={{ y: y1 }} className="lg:sticky lg:top-32">
-                <div className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-none mb-6 md:mb-8 opacity-90 text-black">
+                <div className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-none mb-8 md:mb-8 opacity-90 text-black">
                   <TextReveal delay={0.1}>DIGITAL</TextReveal>
                   <br />
                   <TextReveal delay={0.3}>CRAFTSMAN</TextReveal>
@@ -26,7 +26,7 @@ const About: React.FC = () => {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true, margin: "-10%" }}
                   transition={{ delay: 0.5, duration: 0.8 }}
-                  className="text-lg md:text-xl text-gray-600 font-light max-w-md leading-relaxed"
+                  className="text-lg md:text-xl text-gray-600 font-light max-w-md leading-relaxed relative z-10"
                 >
                   I build digital products that are clean, efficient, and future-proof.
                 </motion.p>
@@ -40,12 +40,12 @@ const About: React.FC = () => {
                whileInView={{ opacity: 1, x: 0 }}
                viewport={{ once: true, margin: "-10%" }}
                transition={{ duration: 0.8 }}
-             >
-                <span className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 md:mb-4 block">01 / Philosophy</span>
-                <p className="text-lg md:text-2xl font-light leading-normal text-gray-800">
-                  "Design is intelligence made visible." I believe in stripping away the non-essential to reveal the core message. My process is deeply collaborative, ensuring every pixel serves a purpose.
-                </p>
-             </motion.div>
+              >
+                 <span className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 md:mb-4 block">01 / Philosophy</span>
+                 <p className="text-base md:text-2xl font-light leading-relaxed text-gray-800">
+                   "Design is intelligence made visible." I believe in stripping away the non-essential to reveal the core message. My process is deeply collaborative, ensuring every pixel serves a purpose.
+                 </p>
+              </motion.div>
 
              {/* Stack Block */}
              <motion.div

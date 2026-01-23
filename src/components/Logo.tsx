@@ -18,6 +18,9 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   // Detect iOS specifically (needs permission request on tap)
   const isIOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
+  // Store initial calibration values (the phone's orientation when gyro starts)
+  const calibrationRef = useRef<{ beta: number; gamma: number } | null>(null);
+
   // 1. Mouse/Gyroscope Tracking (0 to 1)
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
@@ -32,14 +35,23 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   const rotateY = useTransform(springX, [0, 1], [-25, 25]); 
   const skewX = useTransform(springX, [0, 1], [-2, 2]);
 
-  // 4. Gyroscope handler
+  // 4. Gyroscope handler - calibrates to initial phone position
   const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
     const beta = event.beta ?? 0;
     const gamma = event.gamma ?? 0;
     
-    // Normalize to 0-1 range (centered at 0.5)
-    const normalizedY = Math.max(0, Math.min(1, (beta + 45) / 90));
-    const normalizedX = Math.max(0, Math.min(1, (gamma + 45) / 90));
+    // Calibrate on first reading - use current position as baseline
+    if (calibrationRef.current === null) {
+      calibrationRef.current = { beta, gamma };
+    }
+    
+    // Calculate delta from calibration point
+    const deltaBeta = beta - calibrationRef.current.beta;
+    const deltaGamma = gamma - calibrationRef.current.gamma;
+    
+    // Normalize delta to 0-1 range (centered at 0.5, ±30 degrees range)
+    const normalizedY = Math.max(0, Math.min(1, 0.5 + deltaBeta / 60));
+    const normalizedX = Math.max(0, Math.min(1, 0.5 + deltaGamma / 60));
     
     x.set(normalizedX);
     y.set(normalizedY);
