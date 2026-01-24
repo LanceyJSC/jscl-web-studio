@@ -2,6 +2,36 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MagneticButton from './MagneticButton';
 import ContactSuccessAnimation from './ContactSuccessAnimation';
+
+const sectionVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" as const },
+  },
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.7, ease: "easeOut" as const },
+  },
+};
+
 const Contact: React.FC = () => {
   const [formState, setFormState] = useState({
     name: '',
@@ -51,27 +81,30 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-32 relative bg-gradient-to-t from-black/[0.03] via-transparent to-transparent">
+    <motion.section 
+      id="contact" 
+      className="py-16 md:py-32 relative bg-gradient-to-t from-black/[0.03] via-transparent to-transparent"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={sectionVariants}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
+        <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24" variants={sectionVariants}>
           
           {/* Left Column: Heading & Info */}
-          <div className="flex flex-col justify-between">
+          <motion.div className="flex flex-col justify-between" variants={itemVariants}>
             <div>
-            <motion.span 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+              <motion.span 
+                variants={itemVariants}
                 className="text-xs font-mono text-gray-500 mb-6 block tracking-widest"
               >
                 CONTACT
               </motion.span>
               
               <motion.h2 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                variants={itemVariants}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-bold leading-tight md:leading-none mb-6 md:mb-8 tracking-tighter"
               >
                 Let's build <br/>
@@ -79,10 +112,7 @@ const Contact: React.FC = () => {
               </motion.h2>
 
               <motion.p 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
+                variants={itemVariants}
                 className="text-base md:text-lg text-gray-600 font-light max-w-md leading-relaxed mb-8 md:mb-12"
               >
                 I am currently open for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you.
@@ -91,9 +121,7 @@ const Contact: React.FC = () => {
 
             {/* Interactive Email Copy */}
             <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              variants={itemVariants}
               className="group"
             >
               <span className="text-xs font-mono text-gray-400 block mb-2">DIRECT LINE</span>
@@ -130,14 +158,11 @@ const Contact: React.FC = () => {
                 </AnimatePresence>
               </button>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Technical Form */}
           <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+            variants={scaleIn}
             className="bg-white p-5 sm:p-8 md:p-10 border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
           >
             {/* Success Animation Overlay */}
@@ -222,9 +247,9 @@ const Contact: React.FC = () => {
               </div>
             </form>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
