@@ -10,6 +10,7 @@ import Cursor from '@/components/Cursor';
 import Noise from '@/components/Noise';
 import ScrollProgress from '@/components/ScrollProgress';
 import SectionDivider from '@/components/SectionDivider';
+import ParallaxBackground from '@/components/ParallaxBackground';
 
 const Index: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const Index: React.FC = () => {
       
       <Cursor />
       <TechnicalGrid />
+      <ParallaxBackground />
       <Noise />
       <ScrollProgress />
       
