@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '@/data/projects';
 const Projects: React.FC = () => {
-  return <section id="projects" className="py-16 md:py-24 relative">
+  return <section id="projects" className="py-16 md:py-24 relative bg-gradient-to-b from-transparent via-black/[0.015] to-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-end justify-between mb-8 md:mb-16">
           <motion.h2 initial={{

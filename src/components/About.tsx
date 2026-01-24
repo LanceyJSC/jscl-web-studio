@@ -7,7 +7,7 @@ const About: React.FC = () => {
   const y1 = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   return (
-    <section id="about" className="py-16 md:py-32 relative bg-transparent">
+    <section id="about" className="py-16 md:py-32 relative bg-gradient-to-b from-black/[0.02] via-transparent to-black/[0.02]">
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-black">
         {/* Grid setup: Default alignment stretches columns, enabling sticky behavior */}

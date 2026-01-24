@@ -8,6 +8,8 @@ import Footer from '@/components/Footer';
 import TechnicalGrid from '@/components/TechnicalGrid';
 import Cursor from '@/components/Cursor';
 import Noise from '@/components/Noise';
+import ScrollProgress from '@/components/ScrollProgress';
+import SectionDivider from '@/components/SectionDivider';
 
 const Index: React.FC = () => {
   return (
@@ -16,14 +18,18 @@ const Index: React.FC = () => {
       <Cursor />
       <TechnicalGrid />
       <Noise />
+      <ScrollProgress />
       
       {/* Main Content Layer */}
       <div className="relative z-10 flex flex-col">
         <Navbar />
         <main className="flex-grow">
           <Hero />
+          <SectionDivider variant="gradient" />
           <Projects />
+          <SectionDivider variant="dots" />
           <About />
+          <SectionDivider variant="line" />
           <Contact />
         </main>
         <Footer />
