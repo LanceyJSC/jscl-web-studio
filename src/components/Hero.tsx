@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section id="hero" className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
       {/* 
         Hero Content 
         We use h-screen to make it a full immersive entry.

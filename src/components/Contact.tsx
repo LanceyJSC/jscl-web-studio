@@ -51,7 +51,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-32 relative bg-transparent">
+    <section id="contact" className="py-16 md:py-32 relative bg-gradient-to-t from-black/[0.03] via-transparent to-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
