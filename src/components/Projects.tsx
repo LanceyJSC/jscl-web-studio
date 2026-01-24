@@ -2,71 +2,63 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '@/data/projects';
-
-const sectionVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" as const },
-  },
-};
-
 const Projects: React.FC = () => {
-  return (
-    <motion.section 
-      id="projects" 
-      className="py-16 md:py-24 relative bg-gradient-to-b from-transparent via-black/[0.015] to-transparent"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={sectionVariants}
-    >
+  return <section id="projects" className="py-16 md:py-24 relative bg-gradient-to-b from-transparent via-black/[0.015] to-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-end justify-between mb-8 md:mb-16">
-          <motion.h2 
-            variants={itemVariants}
-            className="text-2xl sm:text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter"
-          >
+          <motion.h2 initial={{
+          opacity: 0,
+          x: -50
+        }} whileInView={{
+          opacity: 1,
+          x: 0
+        }} viewport={{
+          once: false,
+          margin: "-10%"
+        }} transition={{
+          duration: 0.8
+        }} className="text-2xl sm:text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter">
             Selected <span className="text-gray-400 font-light">Works</span>
           </motion.h2>
-          <motion.span 
-            variants={itemVariants}
-            className="hidden md:block text-[10px] font-mono tracking-widest text-gray-500 mb-1"
-          >
+          <motion.span initial={{
+          opacity: 0
+        }} whileInView={{
+          opacity: 1
+        }} viewport={{
+          once: false,
+          margin: "-10%"
+        }} transition={{
+          delay: 0.5,
+          duration: 0.5
+        }} className="hidden md:block text-[10px] font-mono tracking-widest text-gray-500 mb-1">
             ( {projects.length} ) PROJECTS
           </motion.span>
         </div>
 
         {/* List Container */}
-        <motion.div className="flex flex-col" variants={sectionVariants}>
+        <div className="flex flex-col">
           {projects.map((project, index) => <ProjectItem key={project.id} project={project} index={index} />)}
           {/* Closing Line */}
-          <motion.div 
-            variants={itemVariants}
-            className="border-t border-gray-200"
-          />
-        </motion.div>
+          <motion.div initial={{
+          scaleX: 0
+        }} whileInView={{
+          scaleX: 1
+        }} viewport={{
+          once: false,
+          margin: "-50px"
+        }} transition={{
+          duration: 0.8,
+          ease: "circOut"
+        }} className="border-t border-gray-200 origin-left"></motion.div>
+        </div>
 
-        <motion.div variants={itemVariants} className="mt-12 md:mt-20 text-center">
-          <Link to="/#projects" className="inline-block px-6 md:px-10 py-3 md:py-4 border border-black text-[10px] md:text-xs font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">
-            View All Projects
-          </Link>
-        </motion.div>
+        <div className="mt-12 md:mt-20 text-center">
+            <Link to="/#projects" className="inline-block px-6 md:px-10 py-3 md:py-4 border border-black text-[10px] md:text-xs font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">
+                View All Projects
+            </Link>
+        </div>
       </div>
-    </motion.section>
-  );
+    </section>;
 };
 interface ProjectItemProps {
   project: typeof projects[0];
@@ -85,17 +77,19 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
       setHasError(true);
     }
   };
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.98 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        duration: 0.5,
-        delay: index * 0.1,
-        ease: "easeOut",
-      }}
-    >
+  return <motion.div initial={{
+    opacity: 0,
+    y: 20
+  }} whileInView={{
+    opacity: 1,
+    y: 0
+  }} viewport={{
+    once: false,
+    margin: "-50px"
+  }} transition={{
+    duration: 0.5,
+    delay: index * 0.1
+  }}>
             <Link to={`/project/${project.slug}`} className="group relative border-t border-gray-200 py-6 md:py-12 flex flex-col md:flex-row gap-4 md:gap-8 md:items-center justify-between transition-all duration-500 hover:bg-gray-50 block px-2 md:px-0">
                 {/* Left Section: Index + Title */}
                 <div className="flex items-start md:items-center gap-4 md:gap-8 md:w-5/12">
@@ -143,7 +137,6 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
                      </div>
                 </div>
             </Link>
-    </motion.div>
-  );
+        </motion.div>;
 };
 export default Projects;
