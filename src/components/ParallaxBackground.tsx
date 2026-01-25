@@ -18,7 +18,7 @@ const ParallaxBackground: React.FC = () => {
   const opacity1 = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.03, 0.06, 0.04, 0.02]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none">
+    <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none hidden md:block">
       
       {/* Floating geometric shapes - Layer 1 (slowest) */}
       <motion.div
