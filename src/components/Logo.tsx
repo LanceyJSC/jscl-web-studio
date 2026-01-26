@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
-import type { Transition } from 'framer-motion';
 
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
@@ -10,68 +9,49 @@ interface LogoProps {
   animated?: boolean;
 }
 
-// Unique animation for each letter
-const letterAnimations: Array<{ animate: Record<string, number[]>; transition: Transition }> = [
-  { // J - Bounce up with twist
-    animate: { y: [0, -20, 0], rotate: [0, -15, 10, 0], scale: [1, 1.2, 1] },
-    transition: { duration: 0.6, ease: "easeOut" as const }
-  },
-  { // S - Wiggle shake
-    animate: { x: [0, -8, 8, -8, 8, 0], rotate: [0, -5, 5, -5, 5, 0] },
-    transition: { duration: 0.5, ease: "easeInOut" as const }
-  },
-  { // C - Pulse scale with glow effect
-    animate: { scale: [1, 1.4, 0.9, 1.15, 1], rotate: [0, 5, -5, 0] },
-    transition: { duration: 0.5, ease: "easeOut" as const }
-  },
-  { // L - 360 flip
-    animate: { rotateY: [0, 360], scale: [1, 1.1, 1] },
-    transition: { duration: 0.7, ease: "easeInOut" as const }
-  }
-];
-
-// Color burst for each letter
-const letterColors = [
-  'rgba(255, 59, 48, 0.8)',   // J - Red
-  'rgba(50, 215, 75, 0.8)',   // S - Green  
-  'rgba(0, 122, 255, 0.8)',   // C - Blue
-  'rgba(255, 204, 0, 0.8)'    // L - Yellow
-];
-
 const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, animated = true }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [animatingLetters, setAnimatingLetters] = useState<Record<number, boolean>>({});
   const [gyroEnabled, setGyroEnabled] = useState(false);
   const isMobile = useIsMobile();
   
+  // Detect iOS specifically (needs permission request on tap)
   const isIOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+  // Store initial calibration values (the phone's orientation when gyro starts)
   const calibrationRef = useRef<{ beta: number; gamma: number } | null>(null);
 
+  // 1. Mouse/Gyroscope Tracking (0 to 1)
   const x = useMotionValue(0.5);
   const y = useMotionValue(0.5);
 
+  // 2. Physics Configuration
   const springConfig = { damping: 30, stiffness: 400, mass: 0.5 };
   const springX = useSpring(x, springConfig);
   const springY = useSpring(y, springConfig);
 
+  // 3. Transforms
   const rotateX = useTransform(springY, [0, 1], [25, -25]); 
   const rotateY = useTransform(springX, [0, 1], [-25, 25]); 
   const skewX = useTransform(springX, [0, 1], [-2, 2]);
 
+  // 4. Gyroscope handler - calibrates to initial phone position
   const handleDeviceOrientationRef = useRef<(event: DeviceOrientationEvent) => void>();
   
   handleDeviceOrientationRef.current = (event: DeviceOrientationEvent) => {
     const beta = event.beta ?? 0;
     const gamma = event.gamma ?? 0;
     
+    // Calibrate on first reading - use current position as baseline
     if (calibrationRef.current === null) {
       calibrationRef.current = { beta, gamma };
     }
     
+    // Calculate delta from calibration point
     const deltaBeta = beta - calibrationRef.current.beta;
     const deltaGamma = gamma - calibrationRef.current.gamma;
     
+    // Normalize delta to 0-1 range (centered at 0.5, ±30 degrees range)
     const normalizedY = Math.max(0, Math.min(1, 0.5 + deltaBeta / 60));
     const normalizedX = Math.max(0, Math.min(1, 0.5 + deltaGamma / 60));
     
@@ -79,20 +59,24 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     y.set(normalizedY);
   };
 
+  // Stable event handler wrapper
   const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
     handleDeviceOrientationRef.current?.(event);
   };
 
+  // Recalibrate function - resets baseline to current phone angle
   const recalibrate = () => {
     calibrationRef.current = null;
   };
 
+  // Haptic feedback function
   const triggerHaptic = () => {
     if (isMobile && navigator.vibrate) {
-      navigator.vibrate(50);
+      navigator.vibrate(50); // Short 50ms vibration
     }
   };
 
+  // 5. Request gyroscope permission on first tap (iOS requires user gesture)
   const requestGyroPermission = async () => {
     if (gyroEnabled) return;
     
@@ -107,16 +91,20 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
         console.log('Gyroscope permission denied');
       }
     } else {
+      // Non-iOS devices - enable directly
       setGyroEnabled(true);
       window.addEventListener('deviceorientation', handleDeviceOrientation);
     }
   };
 
+  // Auto-enable gyroscope for all mobile devices on mount
   useEffect(() => {
     if (!animated || !isMobile) return;
     
+    // iOS requires permission request via user gesture
     if (isIOS) return;
     
+    // Non-iOS devices can enable gyro immediately without permission
     if (window.DeviceOrientationEvent && !gyroEnabled) {
       setGyroEnabled(true);
       window.addEventListener('deviceorientation', handleDeviceOrientation);
@@ -128,11 +116,13 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   }, [animated, isMobile, isIOS]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
+    // Disable mouse interaction on mobile (use gyroscope instead)
     if (!animated || isMobile) return;
 
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     
+    // Calculate normalized position (0 to 1)
     const newX = (e.clientX - rect.left) / rect.width;
     const newY = (e.clientY - rect.top) / rect.height;
     
@@ -146,21 +136,17 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     y.set(0.5);
   };
 
-  // Handle individual letter click
-  const handleLetterClick = (index: number, e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent logo spin
-    if (animatingLetters[index]) return;
-    
-    triggerHaptic();
-    setAnimatingLetters(prev => ({ ...prev, [index]: true }));
-    
-    setTimeout(() => {
-      setAnimatingLetters(prev => ({ ...prev, [index]: false }));
-    }, 700);
+  const handleClick = () => {
+    if (!isSpinning) {
+      setIsSpinning(true);
+      setTimeout(() => setIsSpinning(false), 2000);
+    }
   };
 
+  // Spin animation spring
   const spinY = useSpring(0, { damping: 20, stiffness: 80, mass: 2 });
 
+  // Dimensions & Styles
   const sizeClasses = {
     sm: 'w-10 h-10',
     md: 'w-24 h-24',
@@ -191,6 +177,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
 
   const letters = ['J', 'S', 'C', 'L'];
 
+  // Animation Timings (Faster for small logos)
   const isSmall = size === 'sm';
   const duration = isSmall ? 0.2 : 0.3;
   const stagger = isSmall ? 0.05 : 0.1;
@@ -204,6 +191,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
+      {/* 3D Container */}
       <motion.div 
         className={`relative grid grid-cols-2 grid-rows-2 ${sizeClasses[size]} bg-transparent cursor-pointer`}
         style={{
@@ -216,12 +204,15 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           transformStyle: "preserve-3d", 
         }}
         onClick={() => {
+          // Trigger haptic feedback on mobile
           triggerHaptic();
           
+          // Request gyro permission on first tap (iOS requirement)
           if (isMobile && !gyroEnabled) {
             requestGyroPermission();
           }
           
+          // Recalibrate gyro to current phone angle on each tap
           if (isMobile && gyroEnabled) {
             recalibrate();
           }
@@ -231,12 +222,14 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             spinY.set(spinY.get() + 720);
             setTimeout(() => {
               setIsSpinning(false);
-              spinY.jump(0);
+              spinY.jump(0); // Reset to default position instantly
             }, 2000);
           }
         }}
       >
-        {/* Outer Frame */}
+        {/* --- Outer Frame Construction (Clockwise Drawing) --- */}
+        
+        {/* Top Line: Left to Right */}
         <motion.div 
             className="absolute top-0 left-0 right-0 h-px bg-black origin-left"
             initial={{ scaleX: animated ? 0 : 1 }}
@@ -244,6 +237,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: 0 }}
         />
         
+        {/* Right Line: Top to Bottom */}
         <motion.div 
             className="absolute top-0 right-0 bottom-0 w-px bg-black origin-top"
             initial={{ scaleY: animated ? 0 : 1 }}
@@ -251,6 +245,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration : 0 }}
         />
 
+        {/* Bottom Line: Right to Left */}
         <motion.div 
             className="absolute bottom-0 right-0 left-0 h-px bg-black origin-right"
             initial={{ scaleX: animated ? 0 : 1 }}
@@ -258,6 +253,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration * 2 : 0 }}
         />
 
+        {/* Left Line: Bottom to Top */}
         <motion.div 
             className="absolute bottom-0 left-0 top-0 w-px bg-black origin-bottom"
             initial={{ scaleY: animated ? 0 : 1 }}
@@ -265,7 +261,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration * 3 : 0 }}
         />
 
-        {/* Crosshairs */}
+        {/* --- Internal Crosshairs --- */}
         <motion.div 
           className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-black pointer-events-none" 
           style={{ translateZ: 10 }} 
@@ -281,66 +277,43 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           transition={{ duration: 0.5, ease: "circOut", delay: animated ? duration * 4 : 0 }}
         />
 
-        {/* Letters with individual click animations */}
+        {/* --- Letters (Scanner Build Effect) --- */}
         {letters.map((letter, i) => (
           <div 
             key={i} 
-            className="flex items-center justify-center w-full h-full relative cursor-pointer"
+            className="flex items-center justify-center w-full h-full relative pointer-events-none"
             style={{ transformStyle: "preserve-3d" }}
-            onClick={(e) => handleLetterClick(i, e)}
           >
+            {/* Wrapper for letter to constrain scanner width */}
             <div className="relative" style={{ transform: "translateZ(40px)" }}>
-              {/* Color burst effect on click */}
-              {animatingLetters[i] && (
-                <motion.div
-                  className="absolute inset-0 rounded-full blur-xl"
-                  initial={{ scale: 0, opacity: 0.8 }}
-                  animate={{ scale: 3, opacity: 0 }}
-                  transition={{ duration: 0.6, ease: "easeOut" }}
-                  style={{ 
-                    backgroundColor: letterColors[i],
-                    transform: "translateZ(-20px)"
-                  }}
-                />
-              )}
-              
-              {/* Animated Letter */}
-              <motion.span 
-                className={`${textClasses[size]} font-sans font-medium text-black leading-none select-none block relative z-10`}
-                initial={{ clipPath: animated ? "inset(100% 0 0 0)" : "inset(0% 0 0 0)" }}
-                animate={animatingLetters[i] 
-                  ? letterAnimations[i].animate 
-                  : { clipPath: "inset(0% 0 0 0)" }
-                }
-                transition={animatingLetters[i] 
-                  ? letterAnimations[i].transition
-                  : { 
-                      duration: animated ? letterDuration : 0, 
-                      delay: animated ? (duration * 4.5) + (i * stagger) : 0, 
-                      ease: "linear"
-                    }
-                }
-                style={{
-                  textShadow: animatingLetters[i] ? `0 0 20px ${letterColors[i]}` : 'none'
-                }}
-              >
-                {letter}
-              </motion.span>
-              
-              {/* Scanner Line */}
-              {animated && !animatingLetters[i] && (
-                <motion.div
-                    className="absolute left-0 right-0 h-[2px] bg-black"
-                    initial={{ bottom: "0%", opacity: 0 }}
-                    animate={{ bottom: "100%", opacity: [0, 1, 1, 0] }}
+                {/* Masked Letter - Reveals Bottom-Up */}
+                <motion.span 
+                    className={`${textClasses[size]} font-sans font-medium text-black leading-none select-none block`}
+                    initial={{ clipPath: animated ? "inset(100% 0 0 0)" : "inset(0% 0 0 0)" }}
+                    animate={{ clipPath: "inset(0% 0 0 0)" }}
                     transition={{ 
-                        duration: letterDuration, 
-                        delay: (duration * 4.5) + (i * stagger), 
-                        ease: "linear",
-                        times: [0, 0.1, 0.9, 1] 
+                        duration: animated ? letterDuration : 0, 
+                        delay: animated ? (duration * 4.5) + (i * stagger) : 0, 
+                        ease: "linear"
                     }}
-                />
-              )}
+                >
+                    {letter}
+                </motion.span>
+                
+                {/* Scanner Line - Moves Bottom-Up along with the reveal */}
+                {animated && (
+                  <motion.div
+                      className="absolute left-0 right-0 h-[2px] bg-black"
+                      initial={{ bottom: "0%", opacity: 0 }}
+                      animate={{ bottom: "100%", opacity: [0, 1, 1, 0] }}
+                      transition={{ 
+                          duration: letterDuration, 
+                          delay: (duration * 4.5) + (i * stagger), 
+                          ease: "linear",
+                          times: [0, 0.1, 0.9, 1] 
+                      }}
+                  />
+                )}
             </div>
           </div>
         ))}
@@ -373,7 +346,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           >
             ◉
           </motion.span>
-          <span>Tap letters or logo</span>
+          <span>Tap logo</span>
         </motion.div>
       )}
     </div>
