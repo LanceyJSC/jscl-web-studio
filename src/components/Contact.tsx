@@ -62,7 +62,7 @@ const Contact: React.FC = () => {
             <motion.span 
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, margin: "-10%" }}
                 className="text-xs font-mono text-gray-500 mb-6 block tracking-widest"
               >
                 CONTACT
@@ -71,7 +71,7 @@ const Contact: React.FC = () => {
               <motion.h2 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, margin: "-10%" }}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-bold leading-tight md:leading-none mb-6 md:mb-8 tracking-tighter"
               >
                 Let's build <br/>
@@ -81,7 +81,7 @@ const Contact: React.FC = () => {
               <motion.p 
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, margin: "-10%" }}
                 transition={{ delay: 0.2 }}
                 className="text-base md:text-lg text-gray-600 font-light max-w-md leading-relaxed mb-8 md:mb-12"
               >
@@ -93,7 +93,7 @@ const Contact: React.FC = () => {
             <motion.div 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, margin: "-10%" }}
               className="group"
             >
               <span className="text-xs font-mono text-gray-400 block mb-2">DIRECT LINE</span>
@@ -136,7 +136,7 @@ const Contact: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, margin: "-10%" }}
             transition={{ delay: 0.3 }}
             className="bg-white p-5 sm:p-8 md:p-10 border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
           >
