@@ -1,5 +1,6 @@
 import sceneburnPreview from '@/assets/projects/sceneburn-preview.png';
 import noteflowPreview from '@/assets/projects/noteflow-preview.png';
+import noteflowScreenshot from '@/assets/projects/noteflow-screenshot.png';
 import refinematchPreview from '@/assets/projects/refinematch-preview.png';
 
 export interface Project {
@@ -54,7 +55,7 @@ export const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Framer Motion'],
     role: 'Full Stack Developer & Designer',
     duration: '4 months',
-    screenshots: [noteflowPreview],
+    screenshots: [noteflowScreenshot],
   },
   {
     id: 3,
