@@ -27,9 +27,9 @@ const Hero: React.FC = () => {
           >
              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="leading-relaxed">CREATIVE</motion.span>
              <span className="hidden md:inline-block w-8 h-[1px] bg-black/20"></span>
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }} className="text-black font-medium leading-relaxed">DIGITAL ARCHITECT</motion.span>
+             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }} className="text-black font-medium leading-relaxed">WEB DESIGNER</motion.span>
              <span className="hidden md:inline-block w-8 h-[1px] bg-black/20"></span>
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }} className="leading-relaxed">TECHNICAL</motion.span>
+             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }} className="leading-relaxed">DEVELOPER</motion.span>
           </motion.div>
 
           {/* Staggered Text Reveal for Description */}
@@ -39,14 +39,14 @@ const Hero: React.FC = () => {
                animate={{ y: 0, opacity: 1 }}
                transition={{ duration: 0.8, ease: "easeOut", delay: 2.5 }}
              >
-               Transforming complex problems into elegant, minimalist digital solutions. 
+               I design and build websites that help businesses of all sizes stand out online.
              </motion.p>
              <motion.p
                initial={{ y: "100%", opacity: 0 }}
                animate={{ y: 0, opacity: 1 }}
                transition={{ duration: 0.8, ease: "easeOut", delay: 2.7 }}
              >
-               Merging technical precision with artistic direction.
+               Clean, modern, and tailored to your needs.
              </motion.p>
           </div>
 

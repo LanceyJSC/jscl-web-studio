@@ -16,9 +16,9 @@ const About: React.FC = () => {
           <div className="relative pb-6 lg:pb-0">
              <div className="lg:sticky lg:top-32">
                 <div className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-none mb-4 md:mb-8 opacity-90 text-black">
-                  <TextReveal delay={0.1}>DIGITAL</TextReveal>
+                  <TextReveal delay={0.1}>ABOUT</TextReveal>
                   <br />
-                  <TextReveal delay={0.3}>CRAFTSMAN</TextReveal>
+                  <TextReveal delay={0.3}>ME</TextReveal>
                 </div>
                 
                 <motion.p 
@@ -28,7 +28,7 @@ const About: React.FC = () => {
                   transition={{ delay: 0.5, duration: 0.8 }}
                   className="text-lg md:text-xl text-gray-600 font-light max-w-md leading-relaxed"
                 >
-                  I build digital products that are clean, efficient, and future-proof.
+                  I create websites that work for you—whether you're a small business, startup, or established brand.
                 </motion.p>
              </div>
           </div>
@@ -41,9 +41,9 @@ const About: React.FC = () => {
                viewport={{ once: true, margin: "-10%" }}
                transition={{ duration: 0.8 }}
               >
-                 <span className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 md:mb-4 block">01 / Philosophy</span>
+                 <span className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 md:mb-4 block">01 / My Approach</span>
                  <p className="text-base md:text-2xl font-light leading-relaxed text-gray-800">
-                   "Design is intelligence made visible." I believe in stripping away the non-essential to reveal the core message. My process is deeply collaborative, ensuring every pixel serves a purpose.
+                   I believe great websites start with understanding your goals. I work closely with every client to create something that truly represents their brand—no cookie-cutter templates, just thoughtful design that connects with your audience.
                  </p>
               </motion.div>
 
