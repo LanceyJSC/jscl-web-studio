@@ -39,14 +39,14 @@ const Hero: React.FC = () => {
                animate={{ y: 0, opacity: 1 }}
                transition={{ duration: 0.8, ease: "easeOut", delay: 2.5 }}
              >
-               I design and build websites that help businesses of all sizes stand out online.
+               I design and build websites that make an impact.
              </motion.p>
              <motion.p
                initial={{ y: "100%", opacity: 0 }}
                animate={{ y: 0, opacity: 1 }}
                transition={{ duration: 0.8, ease: "easeOut", delay: 2.7 }}
              >
-               Clean, modern, and tailored to your needs.
+               Clean, modern, and tailored to your vision.
              </motion.p>
           </div>
 

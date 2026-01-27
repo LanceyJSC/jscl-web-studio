@@ -28,7 +28,7 @@ const About: React.FC = () => {
                   transition={{ delay: 0.5, duration: 0.8 }}
                   className="text-lg md:text-xl text-gray-600 font-light max-w-md leading-relaxed"
                 >
-                  I create websites that work for you—whether you're a small business, startup, or established brand.
+                  I create websites that deliver results and leave a lasting impression.
                 </motion.p>
              </div>
           </div>
@@ -43,7 +43,7 @@ const About: React.FC = () => {
               >
                  <span className="text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-widest mb-3 md:mb-4 block">01 / My Approach</span>
                  <p className="text-base md:text-2xl font-light leading-relaxed text-gray-800">
-                   I believe great websites start with understanding your goals. I work closely with every client to create something that truly represents their brand—no cookie-cutter templates, just thoughtful design that connects with your audience.
+                   Great websites start with understanding your goals. I work closely with each client to create something that truly represents their brand—thoughtful design that connects with your audience.
                  </p>
               </motion.div>
 
