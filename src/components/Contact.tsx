@@ -74,8 +74,8 @@ const Contact: React.FC = () => {
                 viewport={{ once: false, margin: "-10%" }}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-display font-bold leading-tight md:leading-none mb-6 md:mb-8 tracking-tighter"
               >
-                Let's build <br/>
-                <span className="text-gray-400">something iconic.</span>
+                Let's work <br/>
+                <span className="text-gray-400">together.</span>
               </motion.h2>
 
               <motion.p 
@@ -85,7 +85,7 @@ const Contact: React.FC = () => {
                 transition={{ delay: 0.2 }}
                 className="text-base md:text-lg text-gray-600 font-light max-w-md leading-relaxed mb-8 md:mb-12"
               >
-                I am currently open for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you.
+                Have a project in mind? I'd love to hear about it. Whether you need a new website, a refresh of an existing one, or just want to chat about ideas—reach out and let's see how I can help.
               </motion.p>
             </div>
 
