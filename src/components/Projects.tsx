@@ -2,63 +2,95 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { projects } from '@/data/projects';
+
 const Projects: React.FC = () => {
-  return <section id="projects" className="py-20 md:py-32 relative bg-gradient-to-b from-gray-50/80 via-white to-gray-50/80 border-y border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-end justify-between mb-8 md:mb-16">
-          <motion.h2 initial={{
-          opacity: 0,
-          x: -50
-        }} whileInView={{
-          opacity: 1,
-          x: 0
-        }} viewport={{
-          once: false,
-          margin: "-10%"
-        }} transition={{
-          duration: 0.8
-        }} className="text-2xl sm:text-3xl md:text-5xl font-display font-bold uppercase tracking-tighter">
-            Selected <span className="text-gray-400 font-light">Works</span>
-          </motion.h2>
-          <motion.span initial={{
-          opacity: 0
-        }} whileInView={{
-          opacity: 1
-        }} viewport={{
-          once: false,
-          margin: "-10%"
-        }} transition={{
-          delay: 0.5,
-          duration: 0.5
-        }} className="hidden md:block text-[10px] font-mono tracking-widest text-gray-500 mb-1">
-            ( {projects.length} ) PROJECTS
+  return (
+    <section id="projects" className="py-24 md:py-40 relative">
+      {/* Subtle background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/[0.02] via-transparent to-black/[0.02]" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        {/* Bold header */}
+        <div className="mb-16 md:mb-24">
+          <motion.span
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, margin: "-10%" }}
+            className="text-[10px] md:text-xs font-mono text-black/40 uppercase tracking-[0.3em] mb-6 block"
+          >
+            Portfolio
           </motion.span>
+          
+          <div className="flex items-end justify-between">
+            <div>
+              <div className="overflow-hidden">
+                <motion.h2 
+                  initial={{ y: "100%" }}
+                  whileInView={{ y: 0 }}
+                  viewport={{ once: false, margin: "-10%" }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter leading-[0.9]"
+                >
+                  SELECTED
+                </motion.h2>
+              </div>
+              <div className="overflow-hidden">
+                <motion.h2 
+                  initial={{ y: "100%" }}
+                  whileInView={{ y: 0 }}
+                  viewport={{ once: false, margin: "-10%" }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter leading-[0.9] text-black/20"
+                >
+                  WORKS
+                </motion.h2>
+              </div>
+            </div>
+            
+            <motion.span 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: false, margin: "-10%" }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="hidden md:block text-6xl font-display font-bold text-black/[0.06]"
+            >
+              {String(projects.length).padStart(2, '0')}
+            </motion.span>
+          </div>
         </div>
 
         {/* List Container */}
         <div className="flex flex-col">
-          {projects.map((project, index) => <ProjectItem key={project.id} project={project} index={index} />)}
+          {projects.map((project, index) => (
+            <ProjectItem key={project.id} project={project} index={index} />
+          ))}
           {/* Closing Line */}
-          <motion.div initial={{
-          scaleX: 0
-        }} whileInView={{
-          scaleX: 1
-        }} viewport={{
-          once: false,
-          margin: "-50px"
-        }} transition={{
-          duration: 0.8,
-          ease: "circOut"
-        }} className="border-t border-gray-200 origin-left"></motion.div>
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: false, margin: "-50px" }}
+            transition={{ duration: 0.8, ease: "circOut" }}
+            className="h-[1px] bg-black/10 origin-left"
+          />
         </div>
 
-        <div className="mt-12 md:mt-20 text-center">
-            <Link to="/#projects" className="inline-block px-6 md:px-10 py-3 md:py-4 border border-black text-[10px] md:text-xs font-mono uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300">
-                View All Projects
-            </Link>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ delay: 0.3 }}
+          className="mt-16 md:mt-24 text-center"
+        >
+          <Link 
+            to="/#projects" 
+            className="inline-block px-10 md:px-14 py-4 md:py-5 bg-black text-white text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] hover:bg-black/80 transition-all duration-300"
+          >
+            View All Projects
+          </Link>
+        </motion.div>
       </div>
-    </section>;
+    </section>
+  );
 };
 interface ProjectItemProps {
   project: typeof projects[0];
@@ -100,10 +132,10 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
 
                     {/* Title & Category */}
                     <div>
-                        <h3 className="text-xl sm:text-2xl md:text-3xl font-display font-light group-hover:translate-x-2 transition-transform duration-500">
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold tracking-tight group-hover:translate-x-3 transition-transform duration-500">
                             {project.title}
                         </h3>
-                        <span className="text-[9px] md:text-[10px] font-mono font-bold uppercase tracking-widest text-gray-400 mt-1 md:mt-2 block group-hover:translate-x-2 transition-transform duration-500 delay-75">
+                        <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.15em] text-black/40 mt-2 block group-hover:translate-x-3 transition-transform duration-500 delay-75">
                             {project.category}
                         </span>
                     </div>

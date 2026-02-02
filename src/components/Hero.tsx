@@ -4,68 +4,101 @@ import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
   return (
-    <section id="hero" className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* 
-        Hero Content 
-        We use h-screen to make it a full immersive entry.
-      */}
-      <div className="container mx-auto px-4 sm:px-6 z-10 flex flex-col items-center justify-center h-full">
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      {/* Dramatic background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/[0.03] via-transparent to-black/[0.05]" />
+      
+      <div className="container mx-auto px-4 sm:px-6 z-10 flex flex-col items-center justify-center h-full py-20">
         
         <div className="flex flex-col items-center w-full">
-          <div className="scale-75 sm:scale-100 md:scale-125">
-            <Logo size="xl" className="mb-8 md:mb-16" />
-          </div>
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="scale-75 sm:scale-100 md:scale-125 mb-12 md:mb-20"
+          >
+            <Logo size="xl" />
+          </motion.div>
           
           <h1 className="sr-only">JSCL - Web Designer</h1>
           
-          {/* Brutalist / Technical typographic element */}
-          <motion.div 
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: "100%", opacity: 1 }}
-            transition={{ duration: 1.5, ease: "easeInOut", delay: 1 }}
-            className="w-full max-w-7xl border-t border-b border-black/10 py-4 md:py-6 my-4 md:my-6 flex flex-col md:flex-row justify-center items-center gap-3 md:gap-6 text-[10px] md:text-xs font-mono tracking-widest text-gray-500 overflow-hidden px-4"
-          >
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="leading-relaxed">CREATIVE</motion.span>
-             <span className="hidden md:inline-block w-8 h-[1px] bg-black/20"></span>
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }} className="text-black font-medium leading-relaxed">WEB DESIGNER</motion.span>
-             <span className="hidden md:inline-block w-8 h-[1px] bg-black/20"></span>
-             <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }} className="leading-relaxed">DEVELOPER</motion.span>
-          </motion.div>
+          {/* Bold statement typography */}
+          <div className="overflow-hidden mb-8 md:mb-12">
+            <motion.h2
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+              className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center leading-[0.85]"
+            >
+              DESIGN
+            </motion.h2>
+          </div>
+          
+          <div className="overflow-hidden mb-8 md:mb-12">
+            <motion.h2
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
+              className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center leading-[0.85] text-black/20"
+            >
+              DEVELOP
+            </motion.h2>
+          </div>
+          
+          <div className="overflow-hidden mb-12 md:mb-16">
+            <motion.h2
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
+              className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center leading-[0.85]"
+            >
+              DELIVER
+            </motion.h2>
+          </div>
 
-          {/* Staggered Text Reveal for Description */}
-          <div className="max-w-xl text-center text-base md:text-lg font-light text-gray-600 leading-relaxed mt-6 md:mt-4 overflow-hidden px-4">
-             <motion.p
-               initial={{ y: "100%", opacity: 0 }}
-               animate={{ y: 0, opacity: 1 }}
-               transition={{ duration: 0.8, ease: "easeOut", delay: 2.5 }}
-             >
-               I design and build websites that make an impact.
-             </motion.p>
-             <motion.p
-               initial={{ y: "100%", opacity: 0 }}
-               animate={{ y: 0, opacity: 1 }}
-               transition={{ duration: 0.8, ease: "easeOut", delay: 2.7 }}
-             >
-               Clean, modern, and tailored to your vision.
-             </motion.p>
+          {/* Elegant divider */}
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.5, ease: "easeInOut", delay: 1.2 }}
+            className="w-full max-w-md h-[1px] bg-black/20 mb-10 md:mb-14"
+          />
+
+          {/* Refined description */}
+          <div className="max-w-lg text-center overflow-hidden">
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 1.5 }}
+              className="text-lg md:text-xl font-light text-black/60 leading-relaxed tracking-wide"
+            >
+              Websites that make an impact.
+              <br />
+              <span className="text-black font-medium">Clean. Modern. Memorable.</span>
+            </motion.p>
           </div>
 
         </div>
       </div>
       
-      {/* Sophisticated Scroll Indicator - Hidden on mobile to prevent overlap */}
+      {/* Refined Scroll Indicator */}
       <motion.div 
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        transition={{ delay: 3, duration: 1 }}
-        className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex-col items-center gap-2 hidden md:flex"
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.5, duration: 1 }}
+        className="absolute bottom-10 md:bottom-16 left-1/2 -translate-x-1/2 flex-col items-center gap-3 hidden md:flex"
       >
-        <span className="text-[10px] uppercase tracking-[0.2em]">Scroll</span>
         <motion.div 
-          animate={{ height: [0, 48, 0], y: [0, 0, 48] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="w-[1px] bg-black"
-        ></motion.div>
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+          className="w-5 h-8 border border-black/30 rounded-full flex justify-center pt-1.5"
+        >
+          <motion.div 
+            animate={{ opacity: [1, 0], y: [0, 8] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+            className="w-1 h-1 bg-black/60 rounded-full"
+          />
+        </motion.div>
       </motion.div>
     </section>
   );
