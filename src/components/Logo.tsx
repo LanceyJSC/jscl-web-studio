@@ -7,9 +7,10 @@ interface LogoProps {
   className?: string;
   withSubtitle?: boolean;
   animated?: boolean;
+  animationDelay?: number;
 }
 
-const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, animated = true }) => {
+const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, animated = true, animationDelay = 0 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isSpinning, setIsSpinning] = useState(false);
   const [gyroEnabled, setGyroEnabled] = useState(false);
@@ -182,6 +183,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   const duration = isSmall ? 0.2 : 0.3;
   const stagger = isSmall ? 0.05 : 0.1;
   const letterDuration = isSmall ? 0.3 : 0.5;
+  const baseDelay = animationDelay;
 
   return (
     <div 
@@ -234,7 +236,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             className="absolute top-0 left-0 right-0 h-px bg-black origin-left"
             initial={{ scaleX: animated ? 0 : 1 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: 0 }}
+            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: baseDelay }}
         />
         
         {/* Right Line: Top to Bottom */}
@@ -242,7 +244,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             className="absolute top-0 right-0 bottom-0 w-px bg-black origin-top"
             initial={{ scaleY: animated ? 0 : 1 }}
             animate={{ scaleY: 1 }}
-            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration : 0 }}
+            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? baseDelay + duration : 0 }}
         />
 
         {/* Bottom Line: Right to Left */}
@@ -250,7 +252,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             className="absolute bottom-0 right-0 left-0 h-px bg-black origin-right"
             initial={{ scaleX: animated ? 0 : 1 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration * 2 : 0 }}
+            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? baseDelay + duration * 2 : 0 }}
         />
 
         {/* Left Line: Bottom to Top */}
@@ -258,7 +260,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             className="absolute bottom-0 left-0 top-0 w-px bg-black origin-bottom"
             initial={{ scaleY: animated ? 0 : 1 }}
             animate={{ scaleY: 1 }}
-            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? duration * 3 : 0 }}
+            transition={{ duration: animated ? duration : 0, ease: "easeInOut", delay: animated ? baseDelay + duration * 3 : 0 }}
         />
 
         {/* --- Internal Crosshairs --- */}
@@ -267,14 +269,14 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           style={{ translateZ: 10 }} 
           initial={{ scaleY: animated ? 0 : 1 }}
           animate={{ scaleY: 1 }}
-          transition={{ duration: 0.5, ease: "circOut", delay: animated ? duration * 4 : 0 }}
+          transition={{ duration: 0.5, ease: "circOut", delay: animated ? baseDelay + duration * 4 : 0 }}
         />
         <motion.div 
           className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-px bg-black pointer-events-none" 
           style={{ translateZ: 10 }} 
           initial={{ scaleX: animated ? 0 : 1 }}
           animate={{ scaleX: 1 }}
-          transition={{ duration: 0.5, ease: "circOut", delay: animated ? duration * 4 : 0 }}
+          transition={{ duration: 0.5, ease: "circOut", delay: animated ? baseDelay + duration * 4 : 0 }}
         />
 
         {/* --- Letters (Scanner Build Effect) --- */}
@@ -293,7 +295,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
                     animate={{ clipPath: "inset(0% 0 0 0)" }}
                     transition={{ 
                         duration: animated ? letterDuration : 0, 
-                        delay: animated ? (duration * 4.5) + (i * stagger) : 0, 
+                        delay: animated ? baseDelay + (duration * 4.5) + (i * stagger) : 0, 
                         ease: "linear"
                     }}
                 >
@@ -308,7 +310,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
                       animate={{ bottom: "100%", opacity: [0, 1, 1, 0] }}
                       transition={{ 
                           duration: letterDuration, 
-                          delay: (duration * 4.5) + (i * stagger), 
+                          delay: baseDelay + (duration * 4.5) + (i * stagger), 
                           ease: "linear",
                           times: [0, 0.1, 0.9, 1] 
                       }}
@@ -324,7 +326,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
         <motion.div 
           initial={{ opacity: animated ? 0 : 1, clipPath: animated ? "inset(0 100% 0 0)" : "inset(0 0 0 0)" }}
           animate={{ opacity: 1, clipPath: "inset(0 0 0 0)" }}
-          transition={{ delay: animated ? duration * 6 : 0, duration: 0.8, ease: "circOut" }}
+          transition={{ delay: animated ? baseDelay + duration * 6 : 0, duration: 0.8, ease: "circOut" }}
         >
           <span className={`block font-sans tracking-[0.4em] text-black font-medium uppercase ${subtitleClasses[size]}`}>
             Web Designer
@@ -337,7 +339,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: duration * 7, duration: 0.5 }}
+          transition={{ delay: baseDelay + duration * 7, duration: 0.5 }}
           className="mt-4 flex items-center gap-2 text-[10px] font-mono tracking-widest text-gray-400 uppercase"
         >
           <motion.span
