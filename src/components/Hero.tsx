@@ -17,7 +17,7 @@ const Hero: React.FC = () => {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="scale-75 sm:scale-100 md:scale-125 mb-12 md:mb-20"
           >
-            <Logo size="xl" />
+            <Logo size="xl" animationDelay={0.8} />
           </motion.div>
           
           <h1 className="sr-only">JSCL - Web Designer</h1>
