@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from './Logo';
+import Logo3DCube from './Logo3DCube';
 import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
@@ -15,9 +15,9 @@ const Hero: React.FC = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="scale-75 sm:scale-100 md:scale-125 mb-12 md:mb-20 mt-16 md:mt-24"
+            className="mb-12 md:mb-20 mt-16 md:mt-24 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80"
           >
-            <Logo size="xl" animationDelay={0.8} />
+            <Logo3DCube size={2.2} className="w-full h-full" />
           </motion.div>
           
           <h1 className="sr-only">JSCL - Web Designer</h1>
