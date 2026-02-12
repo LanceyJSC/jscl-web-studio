@@ -5,7 +5,7 @@ import { projects } from '@/data/projects';
 
 const Projects: React.FC = () => {
   return (
-    <section id="projects" className="py-24 md:py-40 relative">
+    <section id="projects" className="py-16 md:py-24 relative">
       {/* Subtle background */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/[0.02] via-transparent to-black/[0.02]" />
       

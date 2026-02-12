@@ -51,7 +51,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-24 md:py-40 relative">
+    <section id="contact" className="py-16 md:py-24 relative">
       {/* Dramatic background */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/[0.05] via-transparent to-transparent" />
       
