@@ -34,7 +34,7 @@ const SectionDivider: React.FC<SectionDividerProps> = ({
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className={`h-24 md:h-32 relative overflow-hidden ${className}`}
+        className={`h-12 md:h-16 relative overflow-hidden ${className}`}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/[0.02] to-transparent" />
         <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-r from-transparent via-black/10 to-transparent" />

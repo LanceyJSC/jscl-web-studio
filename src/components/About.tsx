@@ -4,7 +4,7 @@ import TextReveal from './TextReveal';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="py-24 md:py-40 relative">
+    <section id="about" className="py-16 md:py-24 relative">
       {/* Subtle texture overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/[0.02] to-transparent" />
       
