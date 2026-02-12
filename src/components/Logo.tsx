@@ -13,6 +13,7 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, animated = true, animationDelay = 0 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [gyroEnabled, setGyroEnabled] = useState(false);
   const isMobile = useIsMobile();
   
@@ -148,6 +149,10 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   const spinY = useSpring(0, { damping: 20, stiffness: 80, mass: 2 });
 
   // Dimensions & Styles
+  const cubeDepth: Record<string, number> = {
+    sm: 10, md: 24, lg: 48, xl: 64, '2xl': 80,
+  };
+
   const sizeClasses = {
     sm: 'w-10 h-10',
     md: 'w-24 h-24',
@@ -155,6 +160,8 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     xl: 'w-64 h-64',
     '2xl': 'w-80 h-80',
   };
+
+  const depth = cubeDepth[size];
 
   const textClasses = {
     sm: 'text-[12px]',
@@ -191,7 +198,8 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
       className={`flex flex-col items-center relative ${className}`} 
       style={{ perspective: 800 }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => !isMobile && setIsHovered(true)}
+      onMouseLeave={() => { handleMouseLeave(); !isMobile && setIsHovered(false); }}
     >
       {/* 3D Container */}
       <motion.div 
@@ -203,7 +211,9 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             return hoverRotate + (sy as number);
           }),
           skewX,
-          transformStyle: "preserve-3d", 
+          transformStyle: "preserve-3d",
+          translateZ: isHovered ? depth / 2 : 0,
+          transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
         onClick={() => {
           // Trigger haptic feedback on mobile
@@ -319,6 +329,52 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
             </div>
           </div>
         ))}
+
+        {/* --- Cube Side Faces (appear on hover) --- */}
+        {/* Right face */}
+        <div 
+          className="absolute top-0 right-0 h-full bg-black/[0.08] pointer-events-none"
+          style={{
+            width: depth,
+            transform: `rotateY(90deg) translateZ(0px)`,
+            transformOrigin: 'right',
+            opacity: isHovered ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+          }}
+        />
+        {/* Left face */}
+        <div 
+          className="absolute top-0 left-0 h-full bg-black/[0.04] pointer-events-none"
+          style={{
+            width: depth,
+            transform: `rotateY(-90deg) translateZ(0px)`,
+            transformOrigin: 'left',
+            opacity: isHovered ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+          }}
+        />
+        {/* Bottom face */}
+        <div 
+          className="absolute bottom-0 left-0 w-full bg-black/[0.06] pointer-events-none"
+          style={{
+            height: depth,
+            transform: `rotateX(-90deg) translateZ(0px)`,
+            transformOrigin: 'bottom',
+            opacity: isHovered ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+          }}
+        />
+        {/* Top face */}
+        <div 
+          className="absolute top-0 left-0 w-full bg-black/[0.03] pointer-events-none"
+          style={{
+            height: depth,
+            transform: `rotateX(90deg) translateZ(0px)`,
+            transformOrigin: 'top',
+            opacity: isHovered ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+          }}
+        />
       </motion.div>
       
       {/* Subtitle */}
