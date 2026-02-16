@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import Logo from './Logo';
 
 const Navbar: React.FC = () => {
@@ -7,9 +6,7 @@ const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -23,12 +20,11 @@ const Navbar: React.FC = () => {
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md py-2 md:py-3 shadow-sm' : 'bg-transparent py-4 md:py-6'
+        isScrolled ? 'bg-background/80 backdrop-blur-md py-2 md:py-3 shadow-sm' : 'bg-transparent py-4 md:py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
         <a href="#" className="group flex items-center">
-          {/* Small version of logo for Navbar - Static (No hover scale) */}
           <Logo size="sm" animated={false} />
         </a>
 
@@ -37,17 +33,16 @@ const Navbar: React.FC = () => {
             <a
               key={link.name}
               href={link.href}
-              className="text-xs font-mono font-normal tracking-widest text-gray-500 hover:text-black transition-colors uppercase relative group"
+              className="text-xs font-mono font-normal tracking-widest text-muted-foreground hover:text-accent transition-colors uppercase relative group"
             >
-              <span className="mr-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 inline-block text-black">//</span>
+              <span className="mr-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 inline-block text-accent">//</span>
               {link.name}
             </a>
           ))}
         </div>
 
-        {/* Mobile Toggle */}
         <button 
-          className="md:hidden text-black focus:outline-none"
+          className="md:hidden text-foreground focus:outline-none"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,14 +55,13 @@ const Navbar: React.FC = () => {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-100 p-4 sm:p-6 flex flex-col space-y-3 sm:space-y-4 shadow-xl animate-fade-in">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border p-4 sm:p-6 flex flex-col space-y-3 sm:space-y-4 shadow-xl animate-fade-in">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-base sm:text-lg font-mono font-normal tracking-widest text-center text-gray-800 hover:text-black uppercase py-2"
+              className="text-base sm:text-lg font-mono font-normal tracking-widest text-center text-foreground hover:text-accent uppercase py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               {link.name}

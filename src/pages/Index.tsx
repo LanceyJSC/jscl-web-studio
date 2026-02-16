@@ -14,7 +14,7 @@ import ParallaxBackground from '@/components/ParallaxBackground';
 
 const Index: React.FC = () => {
   return (
-    <div className="relative min-h-screen bg-[#fafafa] selection:bg-black selection:text-white overflow-x-hidden">
+    <div className="relative min-h-screen bg-background selection:bg-accent selection:text-accent-foreground overflow-x-hidden">
       
       <Cursor />
       <TechnicalGrid />

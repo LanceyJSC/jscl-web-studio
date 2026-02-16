@@ -33,7 +33,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
 
   // 3. Transforms
   const rotateX = useTransform(springY, [0, 1], [25, -25]); 
-  const rotateY = useTransform(springX, [0, 1], [-25, 25]); 
+  const _rotateY = useTransform(springX, [0, 1], [-25, 25]); 
   const skewX = useTransform(springX, [0, 1], [-2, 2]);
 
   // 4. Gyroscope handler - calibrates to initial phone position
@@ -137,13 +137,6 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
     y.set(0.5);
   };
 
-  const handleClick = () => {
-    if (!isSpinning) {
-      setIsSpinning(true);
-      setTimeout(() => setIsSpinning(false), 2000);
-    }
-  };
-
   // Spin animation spring
   const spinY = useSpring(0, { damping: 20, stiffness: 80, mass: 2 });
 
@@ -181,8 +174,6 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
   // Animation Timings (Faster for small logos)
   const isSmall = size === 'sm';
   const duration = isSmall ? 0.2 : 0.3;
-  const stagger = isSmall ? 0.05 : 0.1;
-  const letterDuration = isSmall ? 0.3 : 0.5;
   const baseDelay = animationDelay;
 
   return (
@@ -279,43 +270,26 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', withSubtitle, 
           transition={{ duration: 0.5, ease: "circOut", delay: animated ? baseDelay + duration * 4 : 0 }}
         />
 
-        {/* --- Letters (Scanner Build Effect) --- */}
+        {/* --- Letters (Fade In Together) --- */}
         {letters.map((letter, i) => (
           <div 
             key={i} 
             className="flex items-center justify-center w-full h-full relative pointer-events-none"
             style={{ transformStyle: "preserve-3d" }}
           >
-            {/* Wrapper for letter to constrain scanner width */}
             <div className="relative" style={{ transform: "translateZ(40px)" }}>
-                {/* Masked Letter - Reveals Bottom-Up */}
                 <motion.span 
                     className={`${textClasses[size]} font-sans font-medium text-black leading-none select-none block`}
-                    initial={{ clipPath: animated ? "inset(100% 0 0 0)" : "inset(0% 0 0 0)" }}
-                    animate={{ clipPath: "inset(0% 0 0 0)" }}
+                    initial={{ opacity: animated ? 0 : 1 }}
+                    animate={{ opacity: 1 }}
                     transition={{ 
-                        duration: animated ? letterDuration : 0, 
-                        delay: animated ? baseDelay + (duration * 4.5) + (i * stagger) : 0, 
-                        ease: "linear"
+                        duration: animated ? 0.6 : 0, 
+                        delay: animated ? baseDelay + (duration * 4.5) : 0, 
+                        ease: "easeOut"
                     }}
                 >
                     {letter}
                 </motion.span>
-                
-                {/* Scanner Line - Moves Bottom-Up along with the reveal */}
-                {animated && (
-                  <motion.div
-                      className="absolute left-0 right-0 h-[2px] bg-black"
-                      initial={{ bottom: "0%", opacity: 0 }}
-                      animate={{ bottom: "100%", opacity: [0, 1, 1, 0] }}
-                      transition={{ 
-                          duration: letterDuration, 
-                          delay: baseDelay + (duration * 4.5) + (i * stagger), 
-                          ease: "linear",
-                          times: [0, 0.1, 0.9, 1] 
-                      }}
-                  />
-                )}
             </div>
           </div>
         ))}
