@@ -52,6 +52,8 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "accent-warm": "hsl(var(--accent-warm))",
+        "text-secondary": "hsl(var(--text-secondary))",
       },
       borderRadius: {
         lg: "var(--radius)",
