@@ -33,9 +33,9 @@ const Navbar: React.FC = () => {
             <a
               key={link.name}
               href={link.href}
-              className="text-xs font-mono font-normal tracking-widest text-muted-foreground hover:text-accent transition-colors uppercase relative group"
+              className="text-xs font-mono font-normal tracking-widest text-muted-foreground hover:text-foreground transition-colors uppercase relative group"
             >
-              <span className="mr-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 inline-block text-accent">//</span>
+              <span className="mr-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 inline-block text-foreground">//</span>
               {link.name}
             </a>
           ))}
@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
             <a
               key={link.name}
               href={link.href}
-              className="text-base sm:text-lg font-mono font-normal tracking-widest text-center text-foreground hover:text-accent uppercase py-2"
+              className="text-base sm:text-lg font-mono font-normal tracking-widest text-center text-foreground hover:text-foreground/70 uppercase py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               {link.name}

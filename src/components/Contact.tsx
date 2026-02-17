@@ -53,7 +53,7 @@ const Contact: React.FC = () => {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false, margin: "-10%" }}
-                className="text-[10px] md:text-xs font-mono text-accent uppercase tracking-[0.3em] mb-6 block"
+                className="text-[10px] md:text-xs font-mono text-muted-foreground uppercase tracking-[0.3em] mb-6 block"
               >
                 Contact
               </motion.span>
@@ -76,7 +76,7 @@ const Contact: React.FC = () => {
                   whileInView={{ y: 0 }}
                   viewport={{ once: false, margin: "-10%" }}
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold leading-[0.9] tracking-tighter text-accent"
+                  className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold leading-[0.9] tracking-tighter text-foreground/40"
                 >
                   TALK
                 </motion.h2>
@@ -87,7 +87,7 @@ const Contact: React.FC = () => {
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: false, margin: "-10%" }}
                 transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-                className="w-16 h-[2px] bg-accent origin-left mb-8"
+                className="w-16 h-[2px] bg-foreground origin-left mb-8"
               />
 
               <motion.p 
@@ -112,7 +112,7 @@ const Contact: React.FC = () => {
               <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-[0.2em] block mb-3">Direct Line</span>
               <button 
                 onClick={copyEmail}
-                className="relative text-2xl sm:text-3xl md:text-4xl font-display font-bold hover:text-accent transition-colors text-left w-full flex items-center gap-4 flex-wrap tracking-tight text-foreground"
+                className="relative text-2xl sm:text-3xl md:text-4xl font-display font-bold hover:text-foreground/60 transition-colors text-left w-full flex items-center gap-4 flex-wrap tracking-tight text-foreground"
               >
                 jsclancey@gmail.com
                 <AnimatePresence mode="wait">
@@ -122,7 +122,7 @@ const Contact: React.FC = () => {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
-                      className="text-[10px] font-mono bg-accent text-accent-foreground px-3 py-1.5"
+                      className="text-[10px] font-mono bg-foreground text-background px-3 py-1.5"
                     >
                       COPIED
                     </motion.span>
@@ -149,7 +149,7 @@ const Contact: React.FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: "-10%" }}
             transition={{ delay: 0.3 }}
-            className="bg-card p-5 sm:p-8 md:p-10 border border-border shadow-[4px_4px_0px_0px_hsl(var(--accent))] md:shadow-[8px_8px_0px_0px_hsl(var(--accent))] relative overflow-hidden"
+            className="bg-card p-5 sm:p-8 md:p-10 border border-border shadow-[4px_4px_0px_0px_hsl(var(--foreground))] md:shadow-[8px_8px_0px_0px_hsl(var(--foreground))] relative overflow-hidden"
           >
             <AnimatePresence>
               {status === 'animating' && (
@@ -158,10 +158,10 @@ const Contact: React.FC = () => {
             </AnimatePresence>
 
             {/* Corner Markers */}
-            <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-accent/30"></div>
-            <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-accent/30"></div>
-            <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-accent/30"></div>
-            <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-accent/30"></div>
+            <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-foreground/20"></div>
+            <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-foreground/20"></div>
+            <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-foreground/20"></div>
+            <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-foreground/20"></div>
             
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="space-y-1">
@@ -170,7 +170,7 @@ const Contact: React.FC = () => {
                   type="text" id="name" required
                   value={formState.name}
                   onChange={(e) => setFormState({...formState, name: e.target.value})}
-                  className="w-full bg-transparent border-b border-border py-3 font-mono text-sm text-foreground focus:outline-none focus:border-accent transition-colors placeholder-muted-foreground/40" 
+                   className="w-full bg-transparent border-b border-border py-3 font-mono text-sm text-foreground focus:outline-none focus:border-foreground transition-colors placeholder-muted-foreground/40" 
                   placeholder="Enter your name" 
                 />
               </div>
@@ -180,7 +180,7 @@ const Contact: React.FC = () => {
                   type="email" id="email" required
                   value={formState.email}
                   onChange={(e) => setFormState({...formState, email: e.target.value})}
-                  className="w-full bg-transparent border-b border-border py-3 font-mono text-sm text-foreground focus:outline-none focus:border-accent transition-colors placeholder-muted-foreground/40" 
+                  className="w-full bg-transparent border-b border-border py-3 font-mono text-sm text-foreground focus:outline-none focus:border-foreground transition-colors placeholder-muted-foreground/40" 
                   placeholder="Enter your email" 
                 />
               </div>
@@ -190,14 +190,14 @@ const Contact: React.FC = () => {
                   id="message" rows={4} required
                   value={formState.message}
                   onChange={(e) => setFormState({...formState, message: e.target.value})}
-                  className="w-full bg-transparent border-b border-border py-3 font-mono text-sm text-foreground focus:outline-none focus:border-accent transition-colors placeholder-muted-foreground/40 resize-none" 
+                  className="w-full bg-transparent border-b border-border py-3 font-mono text-sm text-foreground focus:outline-none focus:border-foreground transition-colors placeholder-muted-foreground/40 resize-none" 
                   placeholder="Project details or just hello"
                 ></textarea>
               </div>
               <div className="pt-4 flex justify-end">
                 <MagneticButton 
                   type="submit" 
-                  className={`relative overflow-hidden group px-8 py-3 font-mono text-xs uppercase tracking-widest transition-all duration-300 ${status === 'success' ? 'bg-green-600 text-white' : 'bg-accent text-accent-foreground'}`}
+                  className={`relative overflow-hidden group px-8 py-3 font-mono text-xs uppercase tracking-widest transition-all duration-300 ${status === 'success' ? 'bg-green-600 text-white' : 'bg-foreground text-background'}`}
                 >
                   <span className={`flex items-center gap-2 ${status === 'submitting' ? 'opacity-0' : 'opacity-100'}`}>
                     {status === 'success' ? 'Message Sent' : 'Transmit Data'}
@@ -206,7 +206,7 @@ const Contact: React.FC = () => {
                   {status === 'submitting' && (
                     <div className="absolute inset-0 flex items-center justify-center">
                        <motion.div 
-                         className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full"
+                         className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full"
                          animate={{ rotate: 360 }}
                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                        />

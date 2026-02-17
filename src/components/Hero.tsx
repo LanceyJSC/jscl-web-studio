@@ -39,7 +39,7 @@ const Hero: React.FC = () => {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
-              className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center leading-[0.85] text-accent"
+              className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-center leading-[0.85] text-foreground/40"
             >
               DEVELOP
             </motion.h2>
@@ -61,7 +61,7 @@ const Hero: React.FC = () => {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.5, ease: "easeInOut", delay: 1.2 }}
-            className="w-full max-w-md h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent mb-10 md:mb-14"
+            className="w-full max-w-md h-[1px] bg-gradient-to-r from-transparent via-foreground/20 to-transparent mb-10 md:mb-14"
           />
 
           {/* Refined description */}
@@ -91,12 +91,12 @@ const Hero: React.FC = () => {
         <motion.div 
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="w-5 h-8 border border-accent/40 rounded-full flex justify-center pt-1.5"
+          className="w-5 h-8 border border-foreground/30 rounded-full flex justify-center pt-1.5"
         >
           <motion.div 
             animate={{ opacity: [1, 0], y: [0, 8] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            className="w-1 h-1 bg-accent rounded-full"
+            className="w-1 h-1 bg-foreground/50 rounded-full"
           />
         </motion.div>
       </motion.div>
