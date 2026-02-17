@@ -19,7 +19,7 @@ const About: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false, margin: "-10%" }}
                 transition={{ duration: 0.6 }}
-                className="text-[10px] md:text-xs font-mono text-accent uppercase tracking-[0.3em] mb-6 block"
+                className="text-[10px] md:text-xs font-mono text-muted-foreground uppercase tracking-[0.3em] mb-6 block"
               >
                 About
               </motion.span>
@@ -27,7 +27,7 @@ const About: React.FC = () => {
               <div className="font-display text-5xl sm:text-6xl md:text-8xl font-bold leading-[0.9] mb-8 tracking-tighter">
                 <TextReveal delay={0.1}>I CREATE</TextReveal>
                 <br />
-                <span className="text-accent">
+                <span className="text-foreground/40">
                   <TextReveal delay={0.3}>WEBSITES</TextReveal>
                 </span>
                 <br />
@@ -39,7 +39,7 @@ const About: React.FC = () => {
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: false, margin: "-10%" }}
                 transition={{ duration: 1, ease: "easeOut", delay: 0.7 }}
-                className="w-24 h-[2px] bg-accent origin-left mb-8"
+                className="w-24 h-[2px] bg-foreground origin-left mb-8"
               />
               
               <motion.p 
@@ -64,8 +64,8 @@ const About: React.FC = () => {
               transition={{ duration: 0.8 }}
               className="group"
             >
-              <span className="text-6xl md:text-8xl font-display font-bold text-accent/10 block mb-4 group-hover:text-accent/20 transition-colors duration-500">01</span>
-              <h3 className="text-xs font-mono text-accent uppercase tracking-[0.2em] mb-4">My Approach</h3>
+              <span className="text-6xl md:text-8xl font-display font-bold text-foreground/[0.06] block mb-4 group-hover:text-foreground/10 transition-colors duration-500">01</span>
+              <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-[0.2em] mb-4">My Approach</h3>
               <p className="text-xl md:text-2xl font-light leading-relaxed text-foreground/80">
                 Great websites start with understanding your goals. I work closely with each client to create something that truly represents their brand—thoughtful design that connects with your audience.
               </p>
@@ -79,8 +79,8 @@ const About: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="group"
             >
-              <span className="text-6xl md:text-8xl font-display font-bold text-accent/10 block mb-4 group-hover:text-accent/20 transition-colors duration-500">02</span>
-              <h3 className="text-xs font-mono text-accent uppercase tracking-[0.2em] mb-8">Tech Stack</h3>
+              <span className="text-6xl md:text-8xl font-display font-bold text-foreground/[0.06] block mb-4 group-hover:text-foreground/10 transition-colors duration-500">02</span>
+              <h3 className="text-xs font-mono text-muted-foreground uppercase tracking-[0.2em] mb-8">Tech Stack</h3>
               <div className="grid grid-cols-2 gap-y-10 gap-x-8">
                 {[
                   { title: "Frontend", items: ["React", "TypeScript", "Vite", "Tailwind CSS"] },
@@ -101,7 +101,7 @@ const About: React.FC = () => {
                     </h4>
                     <ul className="space-y-2 text-muted-foreground font-mono text-xs md:text-sm">
                       {group.items.map(item => (
-                        <li key={item} className="hover:text-accent transition-colors duration-300">{item}</li>
+                        <li key={item} className="hover:text-foreground transition-colors duration-300">{item}</li>
                       ))}
                     </ul>
                   </motion.div>

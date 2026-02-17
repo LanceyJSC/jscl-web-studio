@@ -16,7 +16,7 @@ const Projects: React.FC = () => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false, margin: "-10%" }}
-            className="text-[10px] md:text-xs font-mono text-accent uppercase tracking-[0.3em] mb-6 block"
+            className="text-[10px] md:text-xs font-mono text-muted-foreground uppercase tracking-[0.3em] mb-6 block"
           >
             Portfolio
           </motion.span>
@@ -83,7 +83,7 @@ const Projects: React.FC = () => {
         >
           <Link 
             to="/#projects" 
-            className="inline-block px-10 md:px-14 py-4 md:py-5 bg-foreground text-background text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] hover:bg-accent transition-all duration-300"
+            className="inline-block px-10 md:px-14 py-4 md:py-5 bg-foreground text-background text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] hover:bg-foreground/80 transition-all duration-300"
           >
             View All Projects
           </Link>
@@ -123,7 +123,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project, index }) => {
       >
         {/* Left Section: Index + Title */}
         <div className="flex items-start md:items-center gap-4 md:gap-8 md:w-5/12">
-          <span className="text-[10px] md:text-xs font-mono text-muted-foreground/40 group-hover:text-accent transition-colors shrink-0 pt-1 md:pt-0">
+           <span className="text-[10px] md:text-xs font-mono text-muted-foreground/40 group-hover:text-foreground transition-colors shrink-0 pt-1 md:pt-0">
             0{index + 1}
           </span>
           <div>
@@ -145,7 +145,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project, index }) => {
             </div>
           ) : (
             <>
-              <div className="absolute inset-0 bg-accent/5 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 z-10" />
+              <div className="absolute inset-0 bg-foreground/5 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 z-10" />
               <img 
                 src={imgSrc} 
                 alt={project.title} 
@@ -161,7 +161,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({ project, index }) => {
           <span className="text-[10px] md:text-xs text-muted-foreground group-hover:text-foreground transition-colors text-center font-serif">
             {project.year}
           </span>
-          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-border flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all duration-300">
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-border flex items-center justify-center group-hover:bg-foreground group-hover:border-foreground transition-all duration-300">
             <svg className="w-2.5 h-2.5 md:w-3 md:h-3 text-foreground group-hover:text-accent-foreground transform -rotate-45 group-hover:rotate-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
